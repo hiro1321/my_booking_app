@@ -1,0 +1,42 @@
+/* 全体のレイアウト */
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ウェルカムセクション */
+.welcome-section {
+  margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.welcome-section p {
+  margin-bottom: 20px;
+}
+
+/* 客室一覧 */
+.room-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.room-list li {
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+/* CTAボタン */
+.cta-buttons {
+  margin-top: 20px;
+}
+
+.cta-buttons a {
+  margin-right: 10px;
+}
