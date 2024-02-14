@@ -4,9 +4,7 @@ interface CsrfTokenContextType {
   csrfToken: string;
 }
 
-const CsrfTokenContext = createContext<CsrfTokenContextType | undefined>(
-  undefined
-);
+const CsrfTokenContext = createContext<CsrfTokenContextType | null>(null);
 
 const CsrfTokenProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -37,15 +35,17 @@ const CsrfTokenProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <CsrfTokenContext.Provider value={{ csrfToken }}>
-      {children}
-    </CsrfTokenContext.Provider>
+    <div>
+      <CsrfTokenContext.Provider value={{ csrfToken }}>
+        {children}
+      </CsrfTokenContext.Provider>
+    </div>
   );
 };
 
 const useCsrfToken = () => {
   const context = useContext(CsrfTokenContext);
-  if (context === undefined) {
+  if (context === null) {
     throw new Error('useCsrfToken must be used within a CsrfTokenProvider');
   }
   return context;

@@ -5,25 +5,22 @@ import './Home.css';
 import { RoomField } from '../components/RoomField';
 import { compileFunction } from 'vm';
 import { Room } from '../types/Room';
+import { fetchRooms } from '../services/api';
 
 const Home: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
 
   useEffect(() => {
-    const fetchRooms = async () => {
+    const fetchRoomData = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/rooms');
-        if (!response.ok) {
-          throw new Error('Failed to fetch rooms');
-        }
-        const roomData = await response.json();
+        const roomData = await fetchRooms();
         setRooms(roomData);
       } catch (error) {
         console.error('空き状況を取得できませんでした:', error);
       }
     };
 
-    fetchRooms();
+    fetchRoomData();
   }, []);
 
   return (

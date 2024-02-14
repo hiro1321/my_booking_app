@@ -1,0 +1,44 @@
+.container {
+  padding: 20px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.room-id {
+  margin-bottom: 10px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.update-button,
+.cancel-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.update-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.update-button:hover {
+  background-color: #0056b3;
+}
+
+.cancel-button {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.cancel-button:hover {
+  background-color: #f0f0f0;
+}
