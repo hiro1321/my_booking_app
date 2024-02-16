@@ -3,58 +3,31 @@ import { Room } from '../types/Room';
 
 /**
  * 部屋情報のリストをAPIで取得
- * @returns 部屋データの配列
- * @throws 部屋情報が取得できない場合
- */
-export const fetchRoomss = async (): Promise<Room[]> => {
-  try {
-    const response = await fetch(`${API_URL}/rooms`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch rooms');
-    }
-    const roomData: Room[] = await response.json();
-    return roomData;
-  } catch (error) {
-    console.error('部屋情報を取得できませんでした:', error);
-    throw new Error('Failed to fetch rooms');
-  }
-};
-
-/**
- * 部屋情報のリストをAPIで取得
+ *
  * @returns 部屋データの配列
  * @throws 部屋情報が取得できない場合
  */
 export const fetchRooms = async (): Promise<Room[]> => {
   try {
-    const roomData: Room[] = await executeApi('/rooms', 'GET', null);
-    return roomData;
+    const rooms: Room[] = await executeApi('/rooms', 'GET', null);
+    return rooms;
   } catch (error) {
-    console.error('部屋情報を取得できませんでした:', error);
-    throw new Error();
+    throw new Error('部屋情報の一覧を取得できませんでした');
   }
 };
 
 /**
- * 指定されたIDの部屋の情報を取得する関数。
+ * 指定されたIDの部屋の情報を取得する関数
+ *
  * @param roomId 取得したい部屋のID
  * @returns 取得した部屋の情報。取得に失敗した場合はnullを返す。
  */
 export const fetchRoomById = async (roomId: string): Promise<Room | null> => {
   try {
-    console.log('debug-----------------------------------');
-    console.log(roomId);
-    const response = await fetch(`${API_URL}/rooms/${roomId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch room');
-    }
-    const roomData = await response.json();
-    console.log('debug-----------------------------------');
-    console.log(roomData);
-    return roomData as Room; // レスポンスから部屋の情報を取得し、Room型にキャストして返す
+    const roomData: Room = await executeApi(`/rooms/${roomId}`, 'GET', null);
+    return roomData as Room;
   } catch (error) {
-    console.error('Failed to fetch room:', error);
-    return null;
+    throw new Error('部屋情報を取得できませんでした');
   }
 };
 
@@ -69,29 +42,18 @@ export const updateRoom = async (
   roomId: string,
   updatedRoom: Partial<Room>
 ): Promise<Room> => {
-  const csrfResponse = await fetch(`${API_URL}/csrf-token`);
-  const { csrfToken } = await csrfResponse.json();
-
   try {
-    const response = await fetch(`${API_URL}/rooms/${roomId}/`, {
-      method: 'PUT',
-      credentials: 'include', // CORS認証で必須
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      body: JSON.stringify(updatedRoom),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to update room');
-    }
-
-    const updatedRoomData: Room = await response.json();
-    return updatedRoomData;
+    console.log('デバッグ');
+    console.log(roomId);
+    console.log(updatedRoom);
+    const roomData: Room = await executeApi(
+      `/rooms/${roomId}/`,
+      'PUT',
+      updatedRoom
+    );
+    return roomData as Room;
   } catch (error) {
-    console.error('部屋情報を更新できませんでした:', error);
-    throw new Error('Failed to update room');
+    throw new Error('部屋情報の更新に失敗');
   }
 };
 
@@ -103,7 +65,7 @@ export const updateRoom = async (
  * @param exeBody  　　　リクエストボディ
  * @returns　respons
  */
-const executeApi = async (
+export const executeApi = async (
   pathParameter: string,
   exeMethod: string,
   exeBody: any
@@ -118,7 +80,7 @@ const executeApi = async (
 
     // API呼び出し
     let response: Response = new Response();
-    if ((exeMethod = 'GET')) {
+    if (exeMethod == 'GET') {
       response = await fetch(API_URL + pathParameter);
     } else {
       response = await fetch(API_URL + pathParameter, {
@@ -132,10 +94,12 @@ const executeApi = async (
       });
     }
 
+    console.log(response);
     if (!response.ok) {
       throw new Error();
     }
 
+    console.log(response.json);
     return await response.json();
   } catch (error) {
     throw new Error('API呼出しに失敗');

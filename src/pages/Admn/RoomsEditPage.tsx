@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './RoomsEditPage.css'; // 新しく作成するCSSファイルをインポート
 import { Room } from '../../types/Room';
-import { fetchRoomById, updateRoom } from '../../services/api'; // 更新関数をインポート
+import { executeApi, fetchRoomById, updateRoom } from '../../services/api'; // 更新関数をインポート
 import { useCsrfToken } from '../../components/CsrfTokenProvider';
 import { API_URL } from '../../config';
 
@@ -11,7 +11,6 @@ const RoomsEditPage: React.FC = (props: any) => {
 
   const [room, setRoom] = useState<Room | null>(null);
   const [updatedRoomData, setUpdatedRoomData] = useState<Room | null>(null);
-  // const { csrfToken } = useCsrfToken();
   const { csrfToken } = useCsrfToken();
 
   useEffect(() => {
@@ -44,24 +43,21 @@ const RoomsEditPage: React.FC = (props: any) => {
 
   const showDebug = async () => {
     try {
-      // CSRFトークンを取得
-      // const csrfResponse = await fetch(`${API_URL}/csrf-token`);
+      const response = await executeApi(
+        `/rooms/${id}/`,
+        'PUT',
+        updatedRoomData
+      );
 
-      // console.log('CSRF Token:', csrfToken);
-
-      // // CSRFトークンをCookieに設定
-      // document.cookie = `csrftoken=${csrfToken}; path=/`;
-
-      // 部屋情報を更新
-      const response = await fetch(`${API_URL}/rooms/${id}/`, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken,
-        },
-        body: JSON.stringify(updatedRoomData),
-      });
+      // const response = await fetch(`${API_URL}/rooms/${id}/`, {
+      //   method: 'PUT',
+      //   credentials: 'include',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'X-CSRFToken': csrfToken,
+      //   },
+      //   body: JSON.stringify(updatedRoomData),
+      // });
 
       if (!response.ok) {
         throw new Error('Failed to update room');
@@ -133,7 +129,9 @@ const RoomsEditPage: React.FC = (props: any) => {
               }
             />
           </div>
-          <button onClick={handleUpdateRoom}>更新</button>
+          <button type='button' onClick={handleUpdateRoom}>
+            更新
+          </button>
         </form>
       )}
       <button className='cancel-button' onClick={showDebug}>
