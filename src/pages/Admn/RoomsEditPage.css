@@ -1,44 +1,57 @@
-.container {
-  padding: 20px;
+.room-id {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
 }
 
-.title {
+.room-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
   margin-bottom: 20px;
 }
 
-.room-id {
-  margin-bottom: 10px;
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type='text'],
+input[type='number'] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 .link {
   text-decoration: none;
 }
 
-.update-button,
 .cancel-button {
-  padding: 10px 20px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.update-button {
   background-color: #007bff;
-  color: #fff;
-}
-
-.update-button:hover {
-  background-color: #0056b3;
-}
-
-.cancel-button {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #ccc;
 }
 
 .cancel-button:hover {
-  background-color: #f0f0f0;
+  background-color: #0056b3;
 }

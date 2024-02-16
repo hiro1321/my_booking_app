@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_URL } from '../config';
 
 interface CsrfTokenContextType {
   csrfToken: string;
@@ -14,7 +15,7 @@ const CsrfTokenProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/csrf-token');
+        const response = await fetch(`${API_URL}/csrf-token`);
         if (!response.ok) {
           throw new Error('CSRFトークンを取得できませんでした');
         }
@@ -35,11 +36,9 @@ const CsrfTokenProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <div>
-      <CsrfTokenContext.Provider value={{ csrfToken }}>
-        {children}
-      </CsrfTokenContext.Provider>
-    </div>
+    <CsrfTokenContext.Provider value={{ csrfToken }}>
+      {children}
+    </CsrfTokenContext.Provider>
   );
 };
 
