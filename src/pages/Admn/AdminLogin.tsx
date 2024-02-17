@@ -4,9 +4,9 @@ import {
   CsrfTokenProvider,
   useCsrfToken,
 } from '../../components/CsrfTokenProvider';
+import { loginApi } from '../../services/api';
 
 const AdminLogin: React.FC = () => {
-  const { csrfToken } = useCsrfToken();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,23 +14,8 @@ const AdminLogin: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/api/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken,
-        },
-        body: JSON.stringify({ username, password }),
-        credentials: 'include',
-      });
-
-      console.log({ username, password });
-      if (!response.ok) {
-        throw new Error(`HTTPエラー！ステータスコード: ${response.status}`);
-      }
-
       // ログイン成功時の処理
-      const data = await response.json();
+      const data = await loginApi(username, password);
 
       // ローカルストレージにトークンやユーザー情報を保存する
       localStorage.setItem('token', data.token);

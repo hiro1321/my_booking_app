@@ -42,32 +42,11 @@ const RoomsEditPage: React.FC = (props: any) => {
   };
 
   const showDebug = async () => {
-    try {
-      const response = await executeApi(
-        `/rooms/${id}/`,
-        'PUT',
-        updatedRoomData
-      );
-
-      // const response = await fetch(`${API_URL}/rooms/${id}/`, {
-      //   method: 'PUT',
-      //   credentials: 'include',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'X-CSRFToken': csrfToken,
-      //   },
-      //   body: JSON.stringify(updatedRoomData),
-      // });
-
-      if (!response.ok) {
-        throw new Error('Failed to update room');
-      }
-
-      console.log('部屋情報が更新されました');
-    } catch (error) {
-      console.error('部屋情報を更新できませんでした:', error);
-      throw new Error('Failed to update room');
+    if (!updatedRoomData) {
+      return;
     }
+    const response = await updateRoom(id, updatedRoomData);
+    console.log('部屋情報が更新されました');
   };
 
   return (

@@ -2,6 +2,16 @@ import { API_URL } from '../config';
 import { Room } from '../types/Room';
 
 /**
+ *
+ */
+export const loginApi = async (username: string, password: string) => {
+  return await executeApi('/admin/login', 'POST', {
+    username,
+    password,
+  });
+};
+
+/**
  * 部屋情報のリストをAPIで取得
  *
  * @returns 部屋データの配列
@@ -43,9 +53,6 @@ export const updateRoom = async (
   updatedRoom: Partial<Room>
 ): Promise<Room> => {
   try {
-    console.log('デバッグ');
-    console.log(roomId);
-    console.log(updatedRoom);
     const roomData: Room = await executeApi(
       `/rooms/${roomId}/`,
       'PUT',
@@ -94,7 +101,6 @@ export const executeApi = async (
       });
     }
 
-    console.log(response);
     if (!response.ok) {
       throw new Error();
     }
