@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './AdminLogin.css';
-import {
-  CsrfTokenProvider,
-  useCsrfToken,
-} from '../../components/CsrfTokenProvider';
 import { loginApi } from '../../services/api';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const AdminLogin: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login, setIsLoggedIn } = useContext(AuthContext);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      // ログイン成功時の処理
       const data = await loginApi(username, password);
 
       // ローカルストレージにトークンやユーザー情報を保存する
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
+      login();
+      setIsLoggedIn(true);
+
       // 管理者ページへリダイレクト
-      window.location.href = '/admin/dashboard';
 
       console.log('ログインに成功しました');
     } catch (error: any) {

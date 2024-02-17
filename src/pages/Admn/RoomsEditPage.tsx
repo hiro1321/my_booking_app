@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import './RoomsEditPage.css'; // 新しく作成するCSSファイルをインポート
 import { Room } from '../../types/Room';
 import { executeApi, fetchRoomById, updateRoom } from '../../services/api'; // 更新関数をインポート
-import { useCsrfToken } from '../../components/CsrfTokenProvider';
 import { API_URL } from '../../config';
 
 const RoomsEditPage: React.FC = (props: any) => {
@@ -11,7 +10,6 @@ const RoomsEditPage: React.FC = (props: any) => {
 
   const [room, setRoom] = useState<Room | null>(null);
   const [updatedRoomData, setUpdatedRoomData] = useState<Room | null>(null);
-  const { csrfToken } = useCsrfToken();
 
   useEffect(() => {
     const fetchRoomData = async () => {
@@ -39,14 +37,6 @@ const RoomsEditPage: React.FC = (props: any) => {
     } catch (error) {
       console.error('部屋情報を更新できませんでした:', error);
     }
-  };
-
-  const showDebug = async () => {
-    if (!updatedRoomData) {
-      return;
-    }
-    const response = await updateRoom(id, updatedRoomData);
-    console.log('部屋情報が更新されました');
   };
 
   return (
@@ -113,9 +103,6 @@ const RoomsEditPage: React.FC = (props: any) => {
           </button>
         </form>
       )}
-      <button className='cancel-button' onClick={showDebug}>
-        debug
-      </button>
       <Link to='/admin/rooms' className='link'>
         <button className='cancel-button'>キャンセル</button>
       </Link>

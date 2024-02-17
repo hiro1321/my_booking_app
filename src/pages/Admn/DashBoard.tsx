@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const cardContainerStyle = {
   paddingTop: '20px',
@@ -26,6 +27,13 @@ const descriptionStyle = {
 };
 
 const DashboardPage: React.FC = () => {
+  const { isLoggedIn, login, logout } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.log('ダッシュボードページ');
+    console.log(isLoggedIn);
+  }, [isLoggedIn]);
+
   return (
     <div style={cardContainerStyle}>
       <h4 style={headerStyle}>Dashboard</h4>
