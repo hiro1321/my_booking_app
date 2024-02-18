@@ -2,13 +2,21 @@ import { API_URL } from '../config';
 import { Room } from '../types/Room';
 
 /**
- *
+ * ログインAPIを実行
  */
 export const loginApi = async (username: string, password: string) => {
   return await executeApi('/admin/login', 'POST', {
     username,
     password,
   });
+};
+
+/**
+ * 認証tokenの照合APIを実行
+ */
+export const verifyTokenApi = async (tokenValue: string) => {
+  const bodyContent = { token: tokenValue };
+  return await executeApi('/admin/verify-token', 'POST', bodyContent);
 };
 
 /**
