@@ -20,6 +20,17 @@ export const verifyTokenApi = async (tokenValue: string) => {
 };
 
 /**
+ * ログアウトAPIを実行
+ */
+export const logoutApi = async (username: string, token: string) => {
+  const bodyContent = {
+    username: username,
+    token: token,
+  };
+  return await executeApi('/admin/logout', 'POST', bodyContent);
+};
+
+/**
  * 部屋情報のリストをAPIで取得
  *
  * @returns 部屋データの配列

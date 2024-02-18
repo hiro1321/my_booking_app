@@ -6,16 +6,30 @@ import RoomsPage from '../pages/Admn/RoomsPage';
 import RoomsAddPage from '../pages/Admn/RoomsAddPage';
 import RoomsEditPage from '../pages/Admn/RoomsEditPage';
 import PrivateRoute from './PrivateRoutes';
+import AdminNavbar from '../pages/Admn/AdminNavbar';
 
 const AdminRoutes: React.FC<RouteComponentProps> = ({ match }) => {
   return (
-    <Switch>
-      <Route path={`${match.url}/login`} component={AdminLogin} />
-      <PrivateRoute path={`${match.url}/dashboard`} component={DashboardPage} />
-      <Route exact path={`${match.url}/rooms`} component={RoomsPage} />
-      <Route exact path={`${match.url}/rooms/add`} component={RoomsAddPage} />
-      <Route path={`${match.url}/rooms/edit/:id`} component={RoomsEditPage} />
-    </Switch>
+    <>
+      <AdminNavbar />
+      <Switch>
+        <Route path={`${match.url}/login`} component={AdminLogin} />
+        <PrivateRoute
+          path={`${match.url}/dashboard`}
+          component={DashboardPage}
+        />
+        <PrivateRoute exact path={`${match.url}/rooms`} component={RoomsPage} />
+        <PrivateRoute
+          exact
+          path={`${match.url}/rooms/add`}
+          component={RoomsAddPage}
+        />
+        <PrivateRoute
+          path={`${match.url}/rooms/edit/:id`}
+          component={RoomsEditPage}
+        />
+      </Switch>
+    </>
   );
 };
 
