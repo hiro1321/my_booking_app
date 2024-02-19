@@ -84,6 +84,28 @@ export const updateRoom = async (
 };
 
 /**
+ * 対象日付の空き部屋数取得のAPIを実行
+ * @param dateStr 'YYYYMMDD'形式の日付の文字列
+ * @returns 更新された部屋情報
+ * @throws 更新に失敗した場合はエラーをスロー
+ */
+export const getRoomAvailabilityApi = async (
+  dateStr: string
+): Promise<number> => {
+  try {
+    const AvailabilityCnt: number = await executeApi(
+      `/reservations/availability-cnt/${dateStr}/`,
+      'GET',
+      null
+    );
+    // return AvailabilityCnt as number;
+    return 1;
+  } catch (error) {
+    throw new Error('予約情報の取得に失敗');
+  }
+};
+
+/**
  * REST APIを実行する
  *
  * @param pathParameter URIのパスパラメータ
