@@ -93,13 +93,12 @@ export const getRoomAvailabilityApi = async (
   dateStr: string
 ): Promise<number> => {
   try {
-    const AvailabilityCnt: number = await executeApi(
+    const AvailabilityCnt = await executeApi(
       `/reservations/availability-cnt/${dateStr}/`,
       'GET',
       null
     );
-    // return AvailabilityCnt as number;
-    return 1;
+    return AvailabilityCnt.result;
   } catch (error) {
     throw new Error('予約情報の取得に失敗');
   }
@@ -146,7 +145,6 @@ export const executeApi = async (
       throw new Error();
     }
 
-    console.log(response.json);
     return await response.json();
   } catch (error) {
     throw new Error('API呼出しに失敗');

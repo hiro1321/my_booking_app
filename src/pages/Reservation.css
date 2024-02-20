@@ -8,3 +8,15 @@
 .react-calendar__month-view__days__day--neighboringMonth {
   color: #a7a7a7;
 }
+
+.react-calendar__navigation {
+  background-color: #333; /* ナビゲーション部分の背景色を変更 */
+}
+
+.react-calendar__year-view__months__month {
+  color: black;
+  border: #000 solid 1px !important;
+}
+.react-calendar__navigation button {
+  color: white; /* ナビゲーションボタンの文字色を白に変更 */
+}
