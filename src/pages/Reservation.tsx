@@ -4,16 +4,15 @@ import 'react-calendar/dist/Calendar.css';
 import './Reservation.css';
 import { checkYmdstr, cvDateStrPattern, cvDateToStr } from '../services/utils';
 import { getRoomAvailabilityApi } from '../services/api';
-
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+import { useHistory } from 'react-router-dom';
 
 const ReservationPage: React.FC = () => {
   useEffect(() => {
     // 空き部屋数を取得し画面を編集
     const showAvailability = async () => {
       const labelList = document.querySelectorAll('abbr');
-      for (const e of labelList) {
+      for (let i = 0; i < labelList.length; i++) {
+        const e = labelList[i];
         const dateString = e.getAttribute('aria-label');
         if (dateString != null && checkYmdstr(dateString)) {
           // targetの値が文字列の日付の場合、APIで対象日付の空き部屋数を取得
@@ -22,6 +21,14 @@ const ReservationPage: React.FC = () => {
           const nextElement = e.nextElementSibling;
           if (nextElement) {
             nextElement.textContent = '空き' + availability;
+          }
+
+          // 親要素buttonにリンクを追加
+          const buttonElement = e.parentElement;
+          if (buttonElement) {
+            buttonElement.addEventListener('click', () => {
+              window.location.href = `/reservation/${changedFommatDate}`;
+            });
           }
         }
       }

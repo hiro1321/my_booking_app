@@ -1,0 +1,23 @@
+.roomdetail {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 50px;
+  margin: 10px;
+}
+
+.roomdetail p {
+  margin: 5px 0;
+}
+
+.roomdetail p:first-child {
+  font-weight: bold;
+}
+
+.roomdetail p:last-child {
+  color: #888;
+}
+
+.roomdetail:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}

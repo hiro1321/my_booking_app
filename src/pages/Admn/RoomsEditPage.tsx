@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import './RoomsEditPage.css'; // 新しく作成するCSSファイルをインポート
 import { Room } from '../../types/Room';
 import { executeApi, fetchRoomById, updateRoom } from '../../services/api'; // 更新関数をインポート
-import { API_URL } from '../../config';
 
 const RoomsEditPage: React.FC = (props: any) => {
   const id = props.match.params.id;

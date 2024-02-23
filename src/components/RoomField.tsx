@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import { Room } from '../types/Room';
+import { cvNumToRoundStr } from '../services/utils';
 
 interface RoomProps {
   room: Room;
   index: number;
 }
-
-const formattedString = (num: number): string => {
-  return Math.round(num).toString();
-};
 
 export const RoomField: React.FC<RoomProps> = ({ room, index }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +23,7 @@ export const RoomField: React.FC<RoomProps> = ({ room, index }) => {
     <div className={`incomplete-area ${isVisible ? 'visible' : ''}`}>
       <p>{room.room_number}号室</p>
       <p>{room.room_type}</p>
-      <p>{formattedString(room.price)}円</p>
+      <p>{cvNumToRoundStr(room.price)}円</p>
     </div>
   );
 };

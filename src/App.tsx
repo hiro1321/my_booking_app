@@ -6,6 +6,8 @@ import Contact from './pages/Contact';
 import Reservation from './pages/Reservation';
 import Navbar from './pages/Navbar';
 import AdminRoutes from './routes/AdminRoutes';
+import ReservationDetailPage from './pages/ReservationDetailPage';
+import ReservationSelectRoomPage from './pages/ReservationSelectRoomPage';
 
 const App: React.FC = () => {
   return (
@@ -17,7 +19,16 @@ const App: React.FC = () => {
             <Route exact path='/' component={Home} />
             <Route path='/about' component={About} />
             <Route path='/contact' component={Contact} />
-            <Route path='/reservation' component={Reservation} />
+            <Route exact path='/reservation' component={Reservation} />
+            <Route
+              exact
+              path='/reservation/:date'
+              component={ReservationSelectRoomPage}
+            />
+            <Route
+              path='/reservation/:date/:roomNumber'
+              component={ReservationDetailPage}
+            />
             <Route
               path='/admin'
               render={(props) => <AdminRoutes {...props} />}

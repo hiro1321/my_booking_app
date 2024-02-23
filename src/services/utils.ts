@@ -34,3 +34,13 @@ export const checkYmdstr = (dateString: string): boolean => {
   const pattern = /^\d{4}年\d{1,2}月\d{1,2}日$/;
   return pattern.test(dateString);
 };
+
+/**
+ * 数字の小数点未満を丸めて文字列を返す
+ *
+ * @param num 数字
+ * @return 処理後の文字列
+ */
+export const cvNumToRoundStr = (num: number): string => {
+  return Math.round(num).toString();
+};
