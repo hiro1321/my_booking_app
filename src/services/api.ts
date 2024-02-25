@@ -1,11 +1,12 @@
 import { API_URL } from '../config';
+import { ReservationData } from '../types/ReservationData';
 import { Room } from '../types/Room';
 
 /**
  * ログインAPIを実行
  */
 export const loginApi = async (username: string, password: string) => {
-  return await executeApi('/admin/login', 'POST', {
+  return await executeApiThrowOnError('/admin/login', 'POST', {
     username,
     password,
   });
@@ -16,7 +17,11 @@ export const loginApi = async (username: string, password: string) => {
  */
 export const verifyTokenApi = async (tokenValue: string) => {
   const bodyContent = { token: tokenValue };
-  return await executeApi('/admin/verify-token', 'POST', bodyContent);
+  return await executeApiThrowOnError(
+    '/admin/verify-token',
+    'POST',
+    bodyContent
+  );
 };
 
 /**
@@ -27,7 +32,7 @@ export const logoutApi = async (username: string, token: string) => {
     username: username,
     token: token,
   };
-  return await executeApi('/admin/logout', 'POST', bodyContent);
+  return await executeApiThrowOnError('/admin/logout', 'POST', bodyContent);
 };
 
 /**
@@ -38,7 +43,7 @@ export const logoutApi = async (username: string, token: string) => {
  */
 export const fetchRooms = async (): Promise<Room[]> => {
   try {
-    const rooms: Room[] = await executeApi('/rooms', 'GET', null);
+    const rooms: Room[] = await executeApiThrowOnError('/rooms', 'GET', null);
     return rooms;
   } catch (error) {
     throw new Error('部屋情報の一覧を取得できませんでした');
@@ -53,7 +58,11 @@ export const fetchRooms = async (): Promise<Room[]> => {
  */
 export const fetchRoomById = async (roomId: string): Promise<Room | null> => {
   try {
-    const roomData: Room = await executeApi(`/rooms/${roomId}`, 'GET', null);
+    const roomData: Room = await executeApiThrowOnError(
+      `/rooms/${roomId}`,
+      'GET',
+      null
+    );
     return roomData as Room;
   } catch (error) {
     throw new Error('部屋情報を取得できませんでした');
@@ -72,7 +81,7 @@ export const updateRoom = async (
   updatedRoom: Partial<Room>
 ): Promise<Room> => {
   try {
-    const roomData: Room = await executeApi(
+    const roomData: Room = await executeApiThrowOnError(
       `/rooms/${roomId}/`,
       'PUT',
       updatedRoom
@@ -93,7 +102,7 @@ export const getRoomAvailabilityApi = async (
   dateStr: string
 ): Promise<number> => {
   try {
-    const AvailabilityCnt = await executeApi(
+    const AvailabilityCnt = await executeApiThrowOnError(
       `/reservations/availability-cnt/${dateStr}/`,
       'GET',
       null
@@ -105,50 +114,87 @@ export const getRoomAvailabilityApi = async (
 };
 
 /**
- * REST APIを実行する
+ * 予約登録のAPIを実行
+ * @param reservationData
+ * @throws 登録に失敗した場合はエラーをスロー
+ */
+export const submitReservationApi = async (
+  reservationData: ReservationData
+): Promise<string> => {
+  let result;
+  try {
+    result = await executeApiThrowOnError(
+      `/reservations/submit`,
+      'POST',
+      reservationData
+    );
+  } catch (error: any) {}
+
+  return result;
+};
+
+/**
+ * REST APIを実行し、エラーが発生した場合に例外を投げる
  *
  * @param pathParameter URIのパスパラメータ
- * @param exeMethod　　　 メソッド(GET/POST etc.)
- * @param exeBody  　　　リクエストボディ
- * @returns　respons
+ * @param exeMethod メソッド(GET/POST etc.)
+ * @param exeBody リクエストボディ
+ * @returns レスポンスのJSONデータ
+ * @throws エラーが発生した場合
  */
-export const executeApi = async (
+export const executeApiThrowOnError = async (
   pathParameter: string,
   exeMethod: string,
   exeBody: any
 ) => {
-  //  csrfトークンを取得
-  try {
-    const csrfToken = await fetchCsrfToken();
-    if (!csrfToken) {
-      console.error('CSRFトークンを取得できませんでした');
-      throw new Error();
-    }
-
-    // API呼び出し
-    let response: Response = new Response();
-    if (exeMethod == 'GET') {
-      response = await fetch(API_URL + pathParameter);
-    } else {
-      response = await fetch(API_URL + pathParameter, {
-        method: exeMethod,
-        credentials: 'include', // CORS認証で必須
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken,
-        },
-        body: JSON.stringify(exeBody),
-      });
-    }
-
-    if (!response.ok) {
-      throw new Error();
-    }
-
-    return await response.json();
-  } catch (error) {
+  const response = await executeApiHandleResponse(
+    pathParameter,
+    exeMethod,
+    exeBody
+  );
+  if (!response.ok) {
     throw new Error('API呼出しに失敗');
   }
+
+  return await response.json();
+};
+
+/**
+ * REST APIを実行し、response.okのハンドリングを呼び元に委ねる
+ *
+ * @param pathParameter URIのパスパラメータ
+ * @param exeMethod メソッド(GET/POST etc.)
+ * @param exeBody リクエストボディ
+ * @returns レスポンス
+ */
+export const executeApiHandleResponse = async (
+  pathParameter: string,
+  exeMethod: string,
+  exeBody: any
+) => {
+  // CSRFトークンを取得
+  const csrfToken = await fetchCsrfToken();
+  if (!csrfToken) {
+    throw new Error('CSRFトークンを取得できませんでした');
+  }
+
+  // API呼び出し
+  let response: Response;
+  if (exeMethod === 'GET') {
+    response = await fetch(API_URL + pathParameter);
+  } else {
+    response = await fetch(API_URL + pathParameter, {
+      method: exeMethod,
+      credentials: 'include', // CORS認証で必須
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      body: JSON.stringify(exeBody),
+    });
+  }
+
+  return response;
 };
 
 /**

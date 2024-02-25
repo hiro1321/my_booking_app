@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './Reservation.css';
-import { checkYmdstr, cvDateStrPattern, cvDateToStr } from '../services/utils';
+import { checkYmdstr, cvDateStrPattern } from '../services/utils';
 import { getRoomAvailabilityApi } from '../services/api';
 import { useHistory } from 'react-router-dom';
 
