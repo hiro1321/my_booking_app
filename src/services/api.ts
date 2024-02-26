@@ -1,5 +1,6 @@
 import { API_URL } from '../config';
-import { ReservationData } from '../types/ReservationData';
+import { Reservation } from '../types/Reservation';
+import { ReservationInputData } from '../types/ReservationData';
 import { Room } from '../types/Room';
 
 /**
@@ -119,18 +120,35 @@ export const getRoomAvailabilityApi = async (
  * @throws 登録に失敗した場合はエラーをスロー
  */
 export const submitReservationApi = async (
-  reservationData: ReservationData
-): Promise<string> => {
+  reservationData: ReservationInputData
+): Promise<string[]> => {
   let result;
-  try {
-    result = await executeApiThrowOnError(
-      `/reservations/submit`,
-      'POST',
-      reservationData
-    );
-  } catch (error: any) {}
 
-  return result;
+  result = await executeApiHandleResponse(
+    `/reservations/submit`,
+    'POST',
+    reservationData
+  );
+  const resultJson: any = await result.json();
+
+  // エラーがある場合はerrorsを返す
+  if (resultJson && resultJson.errors) {
+    return resultJson.errors;
+  }
+
+  return ['success'];
+};
+
+/**
+ * 予約一覧の取得APIを実行
+ * @throws 登録に失敗した場合はエラーをスロー
+ */
+export const getReservationListApi = async (): Promise<
+  Reservation[] | null
+> => {
+  const response = await executeApiThrowOnError(`/reservations/`, 'GET', null);
+  console.log(response);
+  return response.reservations;
 };
 
 /**

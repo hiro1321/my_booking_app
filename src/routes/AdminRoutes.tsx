@@ -5,6 +5,10 @@ import AdminLogin from '../pages/Admn/AdminLogin';
 import RoomsPage from '../pages/Admn/RoomsPage';
 import RoomsAddPage from '../pages/Admn/RoomsAddPage';
 import RoomsEditPage from '../pages/Admn/RoomsEditPage';
+import ReservationListPage from '../pages/Admn/ReservationList';
+import ReservationDetailPage from '../pages/Admn/ReservationDetail';
+import ReservationAddPage from '../pages/Admn/ReservationAdd';
+import ReservationEditPage from '../pages/Admn/ReservationEdit';
 import PrivateRoute from './PrivateRoutes';
 import AdminNavbar from '../pages/Admn/AdminNavbar';
 
@@ -27,6 +31,24 @@ const AdminRoutes: React.FC<RouteComponentProps> = ({ match }) => {
         <PrivateRoute
           path={`${match.url}/rooms/edit/:id`}
           component={RoomsEditPage}
+        />
+        <PrivateRoute
+          exact
+          path={`${match.url}/reservations`}
+          component={ReservationListPage}
+        />
+        <PrivateRoute
+          exact
+          path={`${match.url}/reservations/add`}
+          component={ReservationAddPage}
+        />
+        <PrivateRoute
+          path={`${match.url}/reservations/edit/:id`}
+          component={ReservationEditPage}
+        />
+        <PrivateRoute
+          path={`${match.url}/reservations/:id`}
+          component={ReservationDetailPage}
         />
       </Switch>
     </>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { convertToDashFormat, getTomorrowDate } from '../services/utils';
-import { ReservationData } from '../types/ReservationData';
+import { ReservationInputData } from '../types/ReservationData';
 import { submitReservationApi } from '../services/api';
 
 const ReservationDetailPage: React.FC = (props: any) => {
@@ -14,22 +14,30 @@ const ReservationDetailPage: React.FC = (props: any) => {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [errorMessage, setErrorMessage] = useState('エラーメッセージ');
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const reservationData: ReservationData = {
+    const reservationData: ReservationInputData = {
       roomNumber,
       checkInDate,
       checkOutDate,
+      checkInTime,
+      checkOutTime,
       name,
       address,
       phoneNumber,
       email,
     };
 
-    const result = await submitReservationApi(reservationData);
+    const result: string[] = await submitReservationApi(reservationData);
+    if (result[0] != 'success') {
+      setErrorMessages(result);
+    } else {
+      setErrorMessages([]);
+    }
+
     console.log(result);
   };
 
@@ -51,7 +59,15 @@ const ReservationDetailPage: React.FC = (props: any) => {
       <h2>予約ページ</h2>
       <p>日付: {date}</p>
       <p>部屋番号: {roomNumber} </p>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessages && (
+        <div>
+          {errorMessages.map((error, index) => (
+            <p key={index} style={{ color: 'red' }}>
+              {error}
+            </p>
+          ))}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <label>
           チェックイン日:
@@ -62,7 +78,7 @@ const ReservationDetailPage: React.FC = (props: any) => {
           />
           <select
             value={checkInTime}
-            onChange={(e) => setCheckInDate(e.target.value)}
+            onChange={(e) => setCheckInTime(e.target.value)}
           >
             {generateTimeOptions().map((time) => (
               <option key={time} value={time}>
@@ -81,7 +97,7 @@ const ReservationDetailPage: React.FC = (props: any) => {
           />
           <select
             value={checkOutTime}
-            onChange={(e) => setCheckInDate(e.target.value)}
+            onChange={(e) => setCheckOutTime(e.target.value)}
           >
             {generateTimeOptions().map((time) => (
               <option key={time} value={time}>

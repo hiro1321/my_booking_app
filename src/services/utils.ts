@@ -59,6 +59,21 @@ export const cvDateStrPattern = (dateString: string): string => {
 };
 
 /**
+ * YYYY/MM/DD HH:mm形式の文字列に変換
+ *
+ * @param dateString タイムゾーンも含む日時の文字列
+ */
+export const formatDatetime = (datetime: string) => {
+  const date = new Date(datetime);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+};
+
+/**
  * 対象文字列が'yyyy年mm月dd日'に該当するか判定
  *
  * @param dateString チェック対象の文字列
