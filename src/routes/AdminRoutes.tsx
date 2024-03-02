@@ -6,11 +6,11 @@ import RoomsPage from '../pages/Admn/RoomsPage';
 import RoomsAddPage from '../pages/Admn/RoomsAddPage';
 import RoomsEditPage from '../pages/Admn/RoomsEditPage';
 import ReservationListPage from '../pages/Admn/ReservationList';
-import ReservationDetailPage from '../pages/Admn/ReservationDetail';
-import ReservationAddPage from '../pages/Admn/ReservationAdd';
-import ReservationEditPage from '../pages/Admn/ReservationEdit';
+import ReservationDetailPage from '../pages/ReservationDetailPage';
+
 import PrivateRoute from './PrivateRoutes';
 import AdminNavbar from '../pages/Admn/AdminNavbar';
+import ReservationEdit from '../pages/Admn/ReservationEdit';
 
 const AdminRoutes: React.FC<RouteComponentProps> = ({ match }) => {
   return (
@@ -40,11 +40,12 @@ const AdminRoutes: React.FC<RouteComponentProps> = ({ match }) => {
         <PrivateRoute
           exact
           path={`${match.url}/reservations/add`}
-          component={ReservationAddPage}
+          component={ReservationDetailPage}
         />
         <PrivateRoute
+          exact
           path={`${match.url}/reservations/edit/:id`}
-          component={ReservationEditPage}
+          component={ReservationEdit}
         />
         <PrivateRoute
           path={`${match.url}/reservations/:id`}

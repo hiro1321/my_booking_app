@@ -12,39 +12,39 @@ interface Params {
 const ReservationEdit: React.FC = () => {
   const [reservation, setReservation] = useState<Reservation | null>(null);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    if (!id) {
-      console.error('Reservation ID not found in URL');
-      return;
-    }
-    const fetchReservation = async () => {
-      try {
-        const response = await fetch(`/api/reservations/${id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch reservation');
-        }
-        const data = await response.json();
-        setReservation(data);
-      } catch (error) {
-        console.error('Error fetching reservation:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const id = params.get('id');
+  //   if (!id) {
+  //     console.error('Reservation ID not found in URL');
+  //     return;
+  //   }
+  //   const fetchReservation = async () => {
+  //     try {
+  //       const response = await fetch(`/api/reservations/${id}`);
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch reservation');
+  //       }
+  //       const data = await response.json();
+  //       setReservation(data);
+  //     } catch (error) {
+  //       console.error('Error fetching reservation:', error);
+  //     }
+  //   };
 
-    fetchReservation();
-  }, []);
+  //   fetchReservation();
+  // }, []);
 
-  if (!reservation) {
-    return <div>Loading...</div>;
-  }
+  // if (!reservation) {
+  //   return <div>Loading...</div>;
+  // }
 
   // 予約の編集フォームを表示するためのコードを追加
 
   return (
     <div>
       <h2>予約編集</h2>
-      <p>予約ID: {reservation.id}</p>
+      {/* <p>予約ID: {reservation.id}</p> */}
       {/* 他の編集フォームの要素を追加 */}
     </div>
   );

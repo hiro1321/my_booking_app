@@ -1,5 +1,5 @@
 export interface ReservationInputData {
-  roomNumber: string;
+  roomNumberInput: string;
   checkInDate: string;
   checkOutDate: string;
   checkInTime: string;

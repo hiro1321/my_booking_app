@@ -147,6 +147,19 @@ export const getReservationListApi = async (): Promise<
   Reservation[] | null
 > => {
   const response = await executeApiThrowOnError(`/reservations/`, 'GET', null);
+  return response.reservations;
+};
+
+/**
+ * 予約一覧の取得APIを実行
+ * @throws 削除に失敗した場合はエラーをスロー
+ */
+export const deleteReservationApi = async (reservationId: string) => {
+  const response = await executeApiThrowOnError(
+    `/reservations/${reservationId}/delete/`,
+    'DELETE',
+    ''
+  );
   console.log(response);
   return response.reservations;
 };
@@ -198,7 +211,7 @@ export const executeApiHandleResponse = async (
 
   // API呼び出し
   let response: Response;
-  if (exeMethod === 'GET') {
+  if (exeMethod == 'GET') {
     response = await fetch(API_URL + pathParameter);
   } else {
     response = await fetch(API_URL + pathParameter, {

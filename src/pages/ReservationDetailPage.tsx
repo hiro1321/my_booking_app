@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { convertToDashFormat, getTomorrowDate } from '../services/utils';
 import { ReservationInputData } from '../types/ReservationData';
 import { submitReservationApi } from '../services/api';
+import './ReservationDetailPage.css';
 
 const ReservationDetailPage: React.FC = (props: any) => {
-  const date = props.match.params.date;
-  const roomNumber = props.match.params.roomNumber;
+  const date = props.match.params.date ? props.match.params.date : '20240101';
+  const roomNumber = props.match.params.roomNumber
+    ? props.match.params.roomNumber
+    : '';
+  const [roomNumberInput, setRoomNumberInput] = useState(roomNumber);
   const [checkInDate, setCheckInDate] = useState(convertToDashFormat(date));
   const [checkOutDate, setCheckOutDate] = useState(getTomorrowDate(date));
   const [checkInTime, setCheckInTime] = useState('18:00');
@@ -15,12 +19,26 @@ const ReservationDetailPage: React.FC = (props: any) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [isSuccess, setIsSuccess] = useState(false);
 
+  const initUseState = () => {
+    setRoomNumberInput(roomNumber);
+    setCheckInDate(convertToDashFormat(date));
+    setCheckOutDate(getTomorrowDate(date));
+    setCheckInTime('18:00');
+    setCheckOutTime('10:00');
+    setName('');
+    setAddress('');
+    setPhoneNumber('');
+    setEmail('');
+    setErrorMessages([]);
+    setIsSuccess(true);
+  };
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const reservationData: ReservationInputData = {
-      roomNumber,
+      roomNumberInput,
       checkInDate,
       checkOutDate,
       checkInTime,
@@ -34,11 +52,20 @@ const ReservationDetailPage: React.FC = (props: any) => {
     const result: string[] = await submitReservationApi(reservationData);
     if (result[0] != 'success') {
       setErrorMessages(result);
+      setIsSuccess(false);
     } else {
+      setRoomNumberInput(roomNumber);
+      setCheckInDate(convertToDashFormat(date));
+      setCheckOutDate(getTomorrowDate(date));
+      setCheckInTime('18:00');
+      setCheckOutTime('10:00');
+      setName('');
+      setAddress('');
+      setPhoneNumber('');
+      setEmail('');
       setErrorMessages([]);
+      setIsSuccess(true);
     }
-
-    console.log(result);
   };
 
   // 60分ごとの時刻の選択肢を生成する関数
@@ -57,10 +84,8 @@ const ReservationDetailPage: React.FC = (props: any) => {
   return (
     <div>
       <h2>予約ページ</h2>
-      <p>日付: {date}</p>
-      <p>部屋番号: {roomNumber} </p>
-      {errorMessages && (
-        <div>
+      {errorMessages.length > 0 && (
+        <div className='error-message'>
           {errorMessages.map((error, index) => (
             <p key={index} style={{ color: 'red' }}>
               {error}
@@ -68,6 +93,28 @@ const ReservationDetailPage: React.FC = (props: any) => {
           ))}
         </div>
       )}
+      {isSuccess && (
+        <div className='success-message'>
+          <p>予約の登録が完了しました</p>
+        </div>
+      )}
+
+      {window.location.pathname.includes('/admin/reservations/add') ? (
+        <label>
+          部屋番号:
+          <input
+            type='text'
+            value={roomNumberInput}
+            onChange={(e) => setRoomNumberInput(e.target.value)}
+          />
+        </label>
+      ) : (
+        <div>
+          <p>日付: {date}</p>
+          <p>部屋番号: {roomNumber}</p>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <label>
           チェックイン日:

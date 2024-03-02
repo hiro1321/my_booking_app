@@ -4,7 +4,6 @@ import 'react-calendar/dist/Calendar.css';
 import './Reservation.css';
 import { checkYmdstr, cvDateStrPattern } from '../services/utils';
 import { getRoomAvailabilityApi } from '../services/api';
-import { useHistory } from 'react-router-dom';
 
 const ReservationPage: React.FC = () => {
   useEffect(() => {
