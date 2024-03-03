@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 interface Reservation {
   id: number;
-  // 他の予約情報を追加
 }
 
 interface Params {

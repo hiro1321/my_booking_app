@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { convertToDashFormat, getTomorrowDate } from '../services/utils';
-import { ReservationInputData } from '../types/ReservationData';
+
 import { submitReservationApi } from '../services/api';
 import './ReservationDetailPage.css';
+import { ReservationInputData } from '../types/Reservation';
+import ReservationForm from '../components/Reservation/ReservationForm';
 
 const ReservationDetailPage: React.FC = (props: any) => {
   const date = props.match.params.date ? props.match.params.date : '20240101';
-  const roomNumber = props.match.params.roomNumber
+  const roomNumber: string = props.match.params.roomNumber
     ? props.match.params.roomNumber
     : '';
   const [roomNumberInput, setRoomNumberInput] = useState(roomNumber);
@@ -21,24 +23,13 @@ const ReservationDetailPage: React.FC = (props: any) => {
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const initUseState = () => {
-    setRoomNumberInput(roomNumber);
-    setCheckInDate(convertToDashFormat(date));
-    setCheckOutDate(getTomorrowDate(date));
-    setCheckInTime('18:00');
-    setCheckOutTime('10:00');
-    setName('');
-    setAddress('');
-    setPhoneNumber('');
-    setEmail('');
-    setErrorMessages([]);
-    setIsSuccess(true);
-  };
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    event
+  ) => {
     event.preventDefault();
 
     const reservationData: ReservationInputData = {
-      roomNumberInput,
+      roomNumber: roomNumberInput,
       checkInDate,
       checkOutDate,
       checkInTime,
@@ -50,36 +41,13 @@ const ReservationDetailPage: React.FC = (props: any) => {
     };
 
     const result: string[] = await submitReservationApi(reservationData);
-    if (result[0] != 'success') {
+    if (result[0] !== 'success') {
       setErrorMessages(result);
       setIsSuccess(false);
     } else {
-      setRoomNumberInput(roomNumber);
-      setCheckInDate(convertToDashFormat(date));
-      setCheckOutDate(getTomorrowDate(date));
-      setCheckInTime('18:00');
-      setCheckOutTime('10:00');
-      setName('');
-      setAddress('');
-      setPhoneNumber('');
-      setEmail('');
-      setErrorMessages([]);
       setIsSuccess(true);
     }
   };
-
-  // 60分ごとの時刻の選択肢を生成する関数
-  function generateTimeOptions() {
-    const options = [];
-    for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute < 60; minute += 60) {
-        const formattedHour = hour.toString().padStart(2, '0');
-        const formattedMinute = minute.toString().padStart(2, '0');
-        options.push(`${formattedHour}:${formattedMinute}`);
-      }
-    }
-    return options;
-  }
 
   return (
     <div>
@@ -99,99 +67,27 @@ const ReservationDetailPage: React.FC = (props: any) => {
         </div>
       )}
 
-      {window.location.pathname.includes('/admin/reservations/add') ? (
-        <label>
-          部屋番号:
-          <input
-            type='text'
-            value={roomNumberInput}
-            onChange={(e) => setRoomNumberInput(e.target.value)}
-          />
-        </label>
-      ) : (
-        <div>
-          <p>日付: {date}</p>
-          <p>部屋番号: {roomNumber}</p>
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          チェックイン日:
-          <input
-            type='date'
-            value={checkInDate}
-            onChange={(e) => setCheckInDate(e.target.value)}
-          />
-          <select
-            value={checkInTime}
-            onChange={(e) => setCheckInTime(e.target.value)}
-          >
-            {generateTimeOptions().map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
-          </select>
-        </label>
-        <br />
-        <label>
-          チェックアウト日:
-          <input
-            type='date'
-            value={checkOutDate}
-            onChange={(e) => setCheckOutDate(e.target.value)}
-          />
-          <select
-            value={checkOutTime}
-            onChange={(e) => setCheckOutTime(e.target.value)}
-          >
-            {generateTimeOptions().map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
-          </select>
-        </label>
-        <br />
-        <label>
-          名前:
-          <input
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          住所:
-          <input
-            type='text'
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          電話番号:
-          <input
-            type='tel'
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          メールアドレス:
-          <input
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type='submit'>送信</button>
-      </form>
+      <ReservationForm
+        roomNumber={roomNumberInput}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        checkInTime={checkInTime}
+        checkOutTime={checkOutTime}
+        name={name}
+        address={address}
+        phoneNumber={phoneNumber}
+        email={email}
+        setRoomNumber={setRoomNumberInput}
+        setCheckInDate={setCheckInDate}
+        setCheckOutDate={setCheckOutDate}
+        setCheckInTime={setCheckInTime}
+        setCheckOutTime={setCheckOutTime}
+        setName={setName}
+        setAddress={setAddress}
+        setPhoneNumber={setPhoneNumber}
+        setEmail={setEmail}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

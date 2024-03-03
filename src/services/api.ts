@@ -1,6 +1,6 @@
 import { API_URL } from '../config';
-import { Reservation } from '../types/Reservation';
-import { ReservationInputData } from '../types/ReservationData';
+import { Reservation, ReservationInputData } from '../types/Reservation';
+
 import { Room } from '../types/Room';
 
 /**
