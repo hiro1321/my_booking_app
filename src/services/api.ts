@@ -151,7 +151,7 @@ export const getReservationListApi = async (): Promise<
 };
 
 /**
- * 予約一覧の取得APIを実行
+ * 予約削除のAPIを実行
  * @throws 削除に失敗した場合はエラーをスロー
  */
 export const deleteReservationApi = async (reservationId: string) => {
@@ -162,6 +162,21 @@ export const deleteReservationApi = async (reservationId: string) => {
   );
   console.log(response);
   return response.reservations;
+};
+
+/**
+ * 予約詳細の取得APIを実行
+ * @throws 取得に失敗した場合はエラーをスロー
+ */
+export const getReservationDetailApi = async (
+  reservationId: string
+): Promise<Reservation> => {
+  const response = await executeApiThrowOnError(
+    `/reservations/${reservationId}/`,
+    'GET',
+    null
+  );
+  return response.reservation;
 };
 
 /**

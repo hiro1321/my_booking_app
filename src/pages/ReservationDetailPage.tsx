@@ -8,10 +8,12 @@ import ReservationForm from '../components/Reservation/ReservationForm';
 
 const ReservationDetailPage: React.FC = (props: any) => {
   const date = props.match.params.date ? props.match.params.date : '20240101';
-  const roomNumber: string = props.match.params.roomNumber
+  const roomNumberParam: string = props.match.params.roomNumber
     ? props.match.params.roomNumber
     : '';
-  const [roomNumberInput, setRoomNumberInput] = useState(roomNumber);
+  // paramが空の場合、admin/reservation/addページで管理者がフォームを使っている
+  const isAdmin = roomNumberParam ? false : true;
+  const [roomNumber, setRoomNumber] = useState(roomNumberParam);
   const [checkInDate, setCheckInDate] = useState(convertToDashFormat(date));
   const [checkOutDate, setCheckOutDate] = useState(getTomorrowDate(date));
   const [checkInTime, setCheckInTime] = useState('18:00');
@@ -29,7 +31,7 @@ const ReservationDetailPage: React.FC = (props: any) => {
     event.preventDefault();
 
     const reservationData: ReservationInputData = {
-      roomNumber: roomNumberInput,
+      roomNumber,
       checkInDate,
       checkOutDate,
       checkInTime,
@@ -45,7 +47,16 @@ const ReservationDetailPage: React.FC = (props: any) => {
       setErrorMessages(result);
       setIsSuccess(false);
     } else {
+      setErrorMessages([]);
       setIsSuccess(true);
+      setCheckInDate(convertToDashFormat(date));
+      setCheckOutDate(getTomorrowDate(date));
+      setCheckInTime('18:00');
+      setCheckOutTime('10:00');
+      setName('');
+      setAddress('');
+      setPhoneNumber('');
+      setEmail('');
     }
   };
 
@@ -67,8 +78,9 @@ const ReservationDetailPage: React.FC = (props: any) => {
         </div>
       )}
 
+      {!isAdmin && <p>日付: {date}</p>}
       <ReservationForm
-        roomNumber={roomNumberInput}
+        roomNumber={roomNumber}
         checkInDate={checkInDate}
         checkOutDate={checkOutDate}
         checkInTime={checkInTime}
@@ -77,7 +89,7 @@ const ReservationDetailPage: React.FC = (props: any) => {
         address={address}
         phoneNumber={phoneNumber}
         email={email}
-        setRoomNumber={setRoomNumberInput}
+        setRoomNumber={setRoomNumber}
         setCheckInDate={setCheckInDate}
         setCheckOutDate={setCheckOutDate}
         setCheckInTime={setCheckInTime}
@@ -86,6 +98,7 @@ const ReservationDetailPage: React.FC = (props: any) => {
         setAddress={setAddress}
         setPhoneNumber={setPhoneNumber}
         setEmail={setEmail}
+        isAdmin={isAdmin}
         handleSubmit={handleSubmit}
       />
     </div>

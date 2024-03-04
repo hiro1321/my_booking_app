@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReservationInputData } from '../../types/Reservation';
 import { ReservationFormProps } from '../../types/Reservation';
 
 const ReservationForm: React.FC<ReservationFormProps> = ({
@@ -21,6 +20,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   setAddress,
   setPhoneNumber,
   setEmail,
+  isAdmin,
   handleSubmit,
 }) => {
   // 60分ごとの時刻の選択肢を生成する関数
@@ -36,21 +36,20 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
     return options;
   }
 
-  const roomNumberInput = roomNumber;
-  const reservationData: ReservationInputData = {
-    roomNumber,
-    checkInDate,
-    checkOutDate,
-    checkInTime,
-    checkOutTime,
-    name,
-    address,
-    phoneNumber,
-    email,
-  };
-
   return (
     <form onSubmit={handleSubmit}>
+      {isAdmin ? (
+        <label>
+          部屋番号:
+          <input
+            type='text'
+            value={roomNumber}
+            onChange={(e) => setRoomNumber(e.target.value)}
+          />
+        </label>
+      ) : (
+        <p>部屋番号: {roomNumber}</p>
+      )}
       <label>
         チェックイン日:
         <input

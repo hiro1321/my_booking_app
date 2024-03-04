@@ -48,5 +48,6 @@ export interface ReservationFormProps extends ReservationInputData {
   setAddress: React.Dispatch<React.SetStateAction<string>>;
   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
+  isAdmin: Boolean;
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
 }

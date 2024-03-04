@@ -1,50 +1,93 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReservationForm from '../../components/Reservation/ReservationForm';
+import { Reservation, ReservationInputData } from '../../types/Reservation';
+import { convertToDashFormat, getTomorrowDate } from '../../services/utils';
+import { getReservationDetailApi } from '../../services/api';
 
-interface Reservation {
-  id: number;
-}
+const ReservationEdit: React.FC = (props: any) => {
+  const reservationId = props.match.params.id;
+  // TODO:dateは仮の値_getTodayStr等の関数を用意
 
-interface Params {
-  id: string;
-}
+  const date = '20240101';
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [roomNumber, setRoomNumber] = useState('');
+  const [checkInDate, setCheckInDate] = useState(convertToDashFormat(date));
+  const [checkOutDate, setCheckOutDate] = useState(getTomorrowDate(date));
+  const [checkInTime, setCheckInTime] = useState('18:00');
+  const [checkOutTime, setCheckOutTime] = useState('10:00');
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-const ReservationEdit: React.FC = () => {
-  const [reservation, setReservation] = useState<Reservation | null>(null);
+  useEffect(() => {
+    const fetchRoomData = async () => {
+      try {
+        const data: Reservation = await getReservationDetailApi(reservationId);
+        setRoomNumber(data.room_number);
+        // TODO:checkInDate - checkOutTimeも型を変換して設定する
+        setName(data.customer_name);
+        setAddress(data.customer_address);
+        setPhoneNumber(data.customer_phone);
+        setEmail(data.customer_email);
+        setLoading(false);
+      } catch (error) {
+        setError('部屋情報の取得に失敗しました。');
+        setLoading(false);
+      }
+    };
 
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const id = params.get('id');
-  //   if (!id) {
-  //     console.error('Reservation ID not found in URL');
-  //     return;
-  //   }
-  //   const fetchReservation = async () => {
-  //     try {
-  //       const response = await fetch(`/api/reservations/${id}`);
-  //       if (!response.ok) {
-  //         throw new Error('Failed to fetch reservation');
-  //       }
-  //       const data = await response.json();
-  //       setReservation(data);
-  //     } catch (error) {
-  //       console.error('Error fetching reservation:', error);
-  //     }
-  //   };
+    fetchRoomData();
+  }, []);
 
-  //   fetchReservation();
-  // }, []);
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    event
+  ) => {
+    try {
+      // TODO:予約更新のapiを作成
+      // await updateRoomDetails(formData);
+      console.log('更新が完了しました');
+    } catch (error) {
+      console.error('更新エラー:', error);
+    }
+  };
 
-  // if (!reservation) {
-  //   return <div>Loading...</div>;
-  // }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  // 予約の編集フォームを表示するためのコードを追加
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div>
-      <h2>予約編集</h2>
-      {/* <p>予約ID: {reservation.id}</p> */}
-      {/* 他の編集フォームの要素を追加 */}
+      <h2>予約の編集</h2>
+      <ReservationForm
+        roomNumber={roomNumber}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        checkInTime={checkInTime}
+        checkOutTime={checkOutTime}
+        name={name}
+        address={address}
+        phoneNumber={phoneNumber}
+        email={email}
+        setRoomNumber={setRoomNumber}
+        setCheckInDate={setCheckInDate}
+        setCheckOutDate={setCheckOutDate}
+        setCheckInTime={setCheckInTime}
+        setCheckOutTime={setCheckOutTime}
+        setName={setName}
+        setAddress={setAddress}
+        setPhoneNumber={setPhoneNumber}
+        setEmail={setEmail}
+        isAdmin={true}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

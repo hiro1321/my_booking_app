@@ -47,10 +47,6 @@ const AdminRoutes: React.FC<RouteComponentProps> = ({ match }) => {
           path={`${match.url}/reservations/edit/:id`}
           component={ReservationEdit}
         />
-        <PrivateRoute
-          path={`${match.url}/reservations/:id`}
-          component={ReservationDetailPage}
-        />
       </Switch>
     </>
   );
