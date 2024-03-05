@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { convertToDashFormat, getTomorrowDate } from '../services/utils';
+import {
+  convertToDashFormat,
+  getTodayStr,
+  getTomorrowDate,
+} from '../services/utils';
 
 import { submitReservationApi } from '../services/api';
 import './ReservationDetailPage.css';
@@ -7,7 +11,9 @@ import { ReservationInputData } from '../types/Reservation';
 import ReservationForm from '../components/Reservation/ReservationForm';
 
 const ReservationDetailPage: React.FC = (props: any) => {
-  const date = props.match.params.date ? props.match.params.date : '20240101';
+  const date = props.match.params.date
+    ? props.match.params.date
+    : getTodayStr();
   const roomNumberParam: string = props.match.params.roomNumber
     ? props.match.params.roomNumber
     : '';

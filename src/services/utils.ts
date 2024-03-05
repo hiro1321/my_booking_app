@@ -1,7 +1,8 @@
 /**
  * 日付型から文字列の年・月・日を取得
  *
- * @param dateString チェック対象の文字列
+ * @param dateString 日付
+ * @return 年・月・日
  */
 const getYMDStr = (date: Date) => {
   const year = date.getFullYear().toString();
@@ -74,6 +75,46 @@ export const formatDatetime = (datetime: string) => {
 };
 
 /**
+ *　'YYYY-MM-DDThh:mm:ssZ'形式の文字列から各要素を取得
+ *
+ * @param 'YYYY-MM-DDThh:mm:ssZ'形式の文字列
+ * @return [年・月・日・時・分・秒]
+ */
+const extractDateTimeElements = (isoString: string) => {
+  const date = new Date(isoString);
+  const year = date.getFullYear().toString();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+
+  return { year, month, day, hours, minutes, seconds };
+};
+
+/**
+ *　日時の文字列の形式を変換し日付情報を取得
+ *
+ * @param 'YYYY-MM-DDThh:mm:ssZ'形式の文字列
+ * @return YYYY-MM-DD'の文字列
+ */
+export const getYmdFromIsoStr = (isoString: string) => {
+  const { year, month, day } = extractDateTimeElements(isoString);
+  return `${year}-${month}-${day}`;
+};
+
+/**
+ *　日時の文字列の形式を変換し時間情報を取得
+ *
+ * @param 'YYYY-MM-DDThh:mm:ssZ'形式の文字列
+ * @return hh:mm'の文字列
+ */
+export const getTimeFromIsoStr = (isoString: string) => {
+  const { hours, minutes } = extractDateTimeElements(isoString);
+  return `${hours}:${minutes}`;
+};
+
+/**
  * 対象文字列が'yyyy年mm月dd日'に該当するか判定
  *
  * @param dateString チェック対象の文字列
@@ -81,6 +122,15 @@ export const formatDatetime = (datetime: string) => {
 export const checkYmdstr = (dateString: string): boolean => {
   const pattern = /^\d{4}年\d{1,2}月\d{1,2}日$/;
   return pattern.test(dateString);
+};
+
+/**
+ * システム日付を取得
+ *
+ * @returns 'YYYYMMDD'形式のシステム日付
+ */
+export const getTodayStr = (): string => {
+  return cvDateToStr(new Date());
 };
 
 /**

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import ReservationForm from '../../components/Reservation/ReservationForm';
 import { Reservation, ReservationInputData } from '../../types/Reservation';
-import { convertToDashFormat, getTomorrowDate } from '../../services/utils';
-import { getReservationDetailApi } from '../../services/api';
+import {
+  convertToDashFormat,
+  cvDateToStr,
+  getTimeFromIsoStr,
+  getTodayStr,
+  getTomorrowDate,
+  getYmdFromIsoStr,
+} from '../../services/utils';
+import {
+  getReservationDetailApi,
+  updateReservationApi,
+} from '../../services/api';
 
 const ReservationEdit: React.FC = (props: any) => {
   const reservationId = props.match.params.id;
-  // TODO:dateは仮の値_getTodayStr等の関数を用意
-
-  const date = '20240101';
+  const date = getTodayStr();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
@@ -28,7 +36,10 @@ const ReservationEdit: React.FC = (props: any) => {
       try {
         const data: Reservation = await getReservationDetailApi(reservationId);
         setRoomNumber(data.room_number);
-        // TODO:checkInDate - checkOutTimeも型を変換して設定する
+        setCheckInDate(getYmdFromIsoStr(data.start_datetime));
+        setCheckInTime(getTimeFromIsoStr(data.start_datetime));
+        setCheckOutDate(getYmdFromIsoStr(data.end_datetime));
+        setCheckOutTime(getTimeFromIsoStr(data.end_datetime));
         setName(data.customer_name);
         setAddress(data.customer_address);
         setPhoneNumber(data.customer_phone);
@@ -46,12 +57,30 @@ const ReservationEdit: React.FC = (props: any) => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
-    try {
-      // TODO:予約更新のapiを作成
-      // await updateRoomDetails(formData);
-      console.log('更新が完了しました');
-    } catch (error) {
-      console.error('更新エラー:', error);
+    event.preventDefault();
+
+    const reservationData: ReservationInputData = {
+      roomNumber,
+      checkInDate,
+      checkOutDate,
+      checkInTime,
+      checkOutTime,
+      name,
+      address,
+      phoneNumber,
+      email,
+    };
+
+    const result: string[] = await updateReservationApi(
+      reservationId,
+      reservationData
+    );
+    if (result[0] !== 'success') {
+      setErrorMessages(result);
+      setIsSuccess(false);
+    } else {
+      setErrorMessages([]);
+      setIsSuccess(true);
     }
   };
 
@@ -66,6 +95,21 @@ const ReservationEdit: React.FC = (props: any) => {
   return (
     <div>
       <h2>予約の編集</h2>
+      {errorMessages.length > 0 && (
+        <div className='error-message'>
+          {errorMessages.map((error, index) => (
+            <p key={index} style={{ color: 'red' }}>
+              {error}
+            </p>
+          ))}
+        </div>
+      )}
+      {isSuccess && (
+        <div className='success-message'>
+          <p>予約の更新が完了しました</p>
+        </div>
+      )}
+
       <ReservationForm
         roomNumber={roomNumber}
         checkInDate={checkInDate}

@@ -180,6 +180,32 @@ export const getReservationDetailApi = async (
 };
 
 /**
+ * 予約更新のAPIを実行
+ * @param reservationData
+ * @throws 登録に失敗した場合はエラーをスロー
+ */
+export const updateReservationApi = async (
+  reservationId: string,
+  reservationData: ReservationInputData
+): Promise<string[]> => {
+  let result;
+
+  result = await executeApiHandleResponse(
+    `/reservations/${reservationId}/edit/`,
+    'POST',
+    reservationData
+  );
+  const resultJson: any = await result.json();
+
+  // エラーがある場合はerrorsを返す
+  if (resultJson && resultJson.errors) {
+    return resultJson.errors;
+  }
+
+  return ['success'];
+};
+
+/**
  * REST APIを実行し、エラーが発生した場合に例外を投げる
  *
  * @param pathParameter URIのパスパラメータ
