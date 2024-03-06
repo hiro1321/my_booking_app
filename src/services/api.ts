@@ -206,6 +206,42 @@ export const updateReservationApi = async (
 };
 
 /**
+ * 予約情報.支払状況の更新APIを実行
+ * @param reservationData
+ * @throws 登録に失敗した場合はエラーをスロー
+ */
+export const updateReservationPaidApi = async (
+  reservationId: string,
+  is_paid: boolean
+): Promise<string[]> => {
+  const bodyContent = { is_paid: is_paid };
+  return await executeApiThrowOnError(
+    `/reservations/${reservationId}/is_paid/edit/`,
+    'POST',
+    bodyContent
+  );
+};
+
+/**
+ * 受付帳票（Excel)取得のAPIを実行
+ * @param reservationData
+ * @throws 通信に失敗した場合、エラーをスロー
+ */
+export const getRecepitionFileApi = async (reservationId: string) => {
+  const response = await executeApiHandleResponse(
+    `/reservations/${reservationId}/get_reception_file/`,
+    'GET',
+    null
+  );
+
+  if (!response.ok) {
+    throw new Error('API呼出しに失敗');
+  }
+
+  return response;
+};
+
+/**
  * REST APIを実行し、エラーが発生した場合に例外を投げる
  *
  * @param pathParameter URIのパスパラメータ

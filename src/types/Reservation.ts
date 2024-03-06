@@ -18,6 +18,7 @@ export interface Reservation {
   start_datetime: string;
   end_datetime: string;
   payment_info: string;
+  is_paid: boolean;
 }
 
 /**
