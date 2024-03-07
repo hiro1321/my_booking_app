@@ -47,3 +47,11 @@
 .reservation-title h2 {
   margin-right: 20px;
 }
+
+.search-window {
+  display: none;
+}
+
+.search-window.visible {
+  display: block;
+}

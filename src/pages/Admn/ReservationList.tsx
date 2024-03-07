@@ -12,6 +12,12 @@ import './ReservationList.css';
 
 const ReservationList: React.FC = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [searchRoomNumber, setSearchRoomNumber] = useState<string>('');
+  const [searchCheckIn, setSearchCheckIn] = useState<string>('');
+  const [searchCheckOut, setSearchCheckOut] = useState<string>('');
+  const [searchName, setSearchName] = useState<string>('');
+  const [isPaidOnly, setIsPaidOnly] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -70,11 +76,87 @@ const ReservationList: React.FC = () => {
     }
   };
 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPaidOnly(event.target.checked);
+  };
+
+  // 検索ウィンドウで指定した文字でフィルター
+  const filteredReservations = reservations.filter((reservation) => {
+    if (
+      searchRoomNumber !== '' &&
+      !reservation.room_number.includes(searchRoomNumber)
+    ) {
+      return false;
+    }
+
+    if (
+      searchCheckIn !== '' &&
+      !reservation.start_datetime.includes(searchCheckIn)
+    ) {
+      return false;
+    }
+    if (
+      searchCheckOut !== '' &&
+      !reservation.end_datetime.includes(searchCheckOut)
+    ) {
+      return false;
+    }
+    if (searchName !== '' && !reservation.customer_name.includes(searchName)) {
+      return false;
+    }
+    if (isPaidOnly && reservation.is_paid) {
+      return false;
+    }
+
+    return true;
+  });
+
   return (
     <div>
       <div className='reservation-title action-buttons'>
         <h2>予約一覧</h2>
         <Link to='/admin/reservations/add'>予約追加</Link>
+        <div>
+          <button onClick={() => setShowSearch(!showSearch)}>検索</button>
+        </div>
+        <div className={showSearch ? 'search-window visible' : 'search-window'}>
+          <label>部屋番号：</label>
+          <input
+            type='text'
+            placeholder='部屋番号で検索'
+            value={searchRoomNumber}
+            onChange={(e) => setSearchRoomNumber(e.target.value)}
+          />
+          <label>予約開始日：</label>
+          <input
+            type='date'
+            placeholder='予約開始日で検索'
+            value={searchCheckIn}
+            onChange={(e) => setSearchCheckIn(e.target.value)}
+          />
+          <label>予約終了日：</label>
+          <input
+            type='date'
+            placeholder='予約終了日で検索'
+            value={searchCheckOut}
+            onChange={(e) => setSearchCheckOut(e.target.value)}
+          />
+          <label>名前：</label>
+          <input
+            type='text'
+            placeholder='名前で検索'
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+          />
+
+          <label>未受付の予約のみ表示：</label>
+          <input
+            type='checkbox'
+            id='isPaidOnlyCheckbox'
+            checked={isPaidOnly}
+            onChange={(e) => setIsPaidOnly(e.target.checked)}
+          />
+        </div>
       </div>
       <table className='reservation-table'>
         <thead>
@@ -87,7 +169,7 @@ const ReservationList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {reservations.map((reservation) => (
+          {filteredReservations.map((reservation) => (
             <tr key={reservation.id}>
               <td>{reservation.room_number}</td>
               <td>{formatDatetime(reservation.start_datetime)}</td>
