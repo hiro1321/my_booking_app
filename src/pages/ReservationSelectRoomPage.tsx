@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, RouteComponentProps } from 'react-router-dom';
 import { fetchRooms, getRoomAvailabilityApi } from '../services/api';
-import { RoomField } from '../components/RoomField';
+import { RoomField } from '../components/Room/RoomField';
 import { Room } from '../types/Room';
 import { cvNumToRoundStr } from '../services/utils';
 import './ReservationSelectRoomPage.css';

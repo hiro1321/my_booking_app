@@ -82,6 +82,9 @@ export const updateRoom = async (
   updatedRoom: Partial<Room>
 ): Promise<Room> => {
   try {
+    console.log('debug_start');
+    console.log(updatedRoom);
+    console.log('debug_end');
     const roomData: Room = await executeApiThrowOnError(
       `/rooms/${roomId}/`,
       'PUT',
@@ -90,6 +93,49 @@ export const updateRoom = async (
     return roomData as Room;
   } catch (error) {
     throw new Error('部屋情報の更新に失敗');
+  }
+};
+
+/**
+ * 部屋情報を更新する関数(画像付き)
+ * @param roomId 更新する部屋のID
+ * @param updatedRoom 更新される部屋情報の一部
+ * @returns 更新された部屋情報
+ * @throws 更新に失敗した場合はエラーをスロー
+ */
+export const updateRoomWithImage = async (
+  roomId: string,
+  updatedRoom: Partial<Room>
+): Promise<Room> => {
+  try {
+    console.log('debug_start');
+    console.log(updatedRoom);
+    console.log('debug_end');
+    const roomData: Room = await executeApiThrowOnError(
+      `/rooms/${roomId}/`,
+      'PUT',
+      updatedRoom
+    );
+    return roomData as Room;
+  } catch (error) {
+    throw new Error('部屋情報の更新に失敗');
+  }
+};
+
+/**
+ * 部屋情報を登録する関数
+ * @param roomData 登録する部屋情報
+ * @throws 登録に失敗した場合はエラーをスロー
+ */
+export const submitRoom = async (roomData: Partial<Room>): Promise<void> => {
+  try {
+    const room: Room = await executeApiThrowOnError(
+      `/rooms/submit/`,
+      'POST',
+      roomData
+    );
+  } catch (error) {
+    throw new Error('部屋情報の登録に失敗');
   }
 };
 

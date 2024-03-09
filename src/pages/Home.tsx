@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './Home.css';
-import { RoomField } from '../components/RoomField';
+import { RoomField } from '../components/Room/RoomField';
 import { compileFunction } from 'vm';
 import { Room } from '../types/Room';
 import { fetchRooms } from '../services/api';
