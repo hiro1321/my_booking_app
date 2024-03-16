@@ -1,0 +1,33 @@
+.incomplete-area {
+  width: 300px;
+  margin-right: 50px;
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid rgb(202, 202, 202);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 3s ease;
+  text-align: center;
+}
+
+.incomplete-area p {
+  margin-bottom: 10px;
+}
+.incomplete-area.visible {
+  opacity: 1;
+}
+
+.img-container {
+  width: 300px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(204, 204, 204);
+}
+
+.img-container img {
+  width: 300px;
+}

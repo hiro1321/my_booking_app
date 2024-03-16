@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../style.css';
+import './RoomCard.css';
 import { Room } from '../../types/Room';
 import { cvNumToRoundStr } from '../../services/utils';
 
@@ -8,7 +8,7 @@ interface RoomProps {
   index: number;
 }
 
-export const RoomField: React.FC<RoomProps> = ({ room, index }) => {
+export const RoomCard: React.FC<RoomProps> = ({ room, index }) => {
   const [isVisible, setIsVisible] = useState(false);
   console.log(room);
   useEffect(() => {
@@ -22,9 +22,15 @@ export const RoomField: React.FC<RoomProps> = ({ room, index }) => {
   return (
     <div className={`incomplete-area ${isVisible ? 'visible' : ''}`}>
       <p>{room.room_number}号室</p>
+      <div className='img-container'>
+        {room.room_image ? (
+          <img src={room.room_image} alt='Room' />
+        ) : (
+          <a>イメージ画像なし</a>
+        )}
+      </div>
       <p>{room.room_type}</p>
       <p>{cvNumToRoundStr(room.price)}円</p>
-      {room.room_image && <img src={room.room_image} alt='Room' />}{' '}
     </div>
   );
 };
