@@ -12,7 +12,7 @@ export const RoomField: React.FC<RoomProps> = ({ room, index }) => {
   const [isVisible, setIsVisible] = useState(false);
   console.log(room);
   useEffect(() => {
-    const delay = 300 * (index + 0.1); // 0.3秒ごとの遅延
+    const delay = 100 * (index + 0.1); // 0.1秒ごとの遅延
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, delay);

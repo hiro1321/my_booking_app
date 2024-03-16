@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Reservation from './pages/Reservation';
-import Navbar from './pages/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import AdminRoutes from './routes/AdminRoutes';
 import ReservationDetailPage from './pages/ReservationDetailPage';
 import ReservationSelectRoomPage from './pages/ReservationSelectRoomPage';

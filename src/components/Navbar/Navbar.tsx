@@ -13,18 +13,13 @@ const Navbar: React.FC = () => {
         </Link>
         <ul className='navbar-nav'>
           <li className='nav-item'>
-            <Link to='/about' className='nav-link'>
-              About
-            </Link>
-          </li>
-          <li className='nav-item'>
-            <Link to='/contact' className='nav-link'>
-              Contact
-            </Link>
-          </li>
-          <li className='nav-item'>
             <Link to='/reservation' className='nav-link'>
               Reservation
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link to='/admin/dashboard' className='nav-link'>
+              Admin menu
             </Link>
           </li>
         </ul>
