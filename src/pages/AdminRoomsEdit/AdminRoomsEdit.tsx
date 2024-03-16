@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './RoomsEditPage.css';
+import './AdminRoomsEdit.css';
 import { Room } from '../../types/Room';
 import { fetchRoomById, updateRoom } from '../../services/api';
 import RoomForm from '../../components/Room/RoomForm';

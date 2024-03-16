@@ -3,12 +3,12 @@ import {
   convertToDashFormat,
   getTodayStr,
   getTomorrowDate,
-} from '../services/utils';
+} from '../../services/utils';
 
-import { submitReservationApi } from '../services/api';
-import './ReservationDetailPage.css';
-import { ReservationInputData } from '../types/Reservation';
-import ReservationForm from '../components/Reservation/ReservationForm';
+import { submitReservationApi } from '../../services/api';
+import './ReservationDetail.css';
+import { ReservationInputData } from '../../types/Reservation';
+import ReservationForm from '../../components/Reservation/ReservationForm';
 
 const ReservationDetailPage: React.FC = (props: any) => {
   const date = props.match.params.date

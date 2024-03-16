@@ -26,12 +26,6 @@ const AdminNavbar: React.FC = () => {
         <Link to='/admin/reservations' className='nav-link'>
           予約管理
         </Link>
-        <Link to='/admin/rooms' className='nav-link'>
-          客室管理
-        </Link>
-        <Link to='/admin/users' className='nav-link'>
-          ユーザー管理
-        </Link>
         <a className='nav-link' onClick={handleLogout}>
           ログアウト
         </a>

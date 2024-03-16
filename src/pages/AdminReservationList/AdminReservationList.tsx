@@ -8,7 +8,7 @@ import {
 } from '../../services/api';
 import { Reservation } from '../../types/Reservation';
 import { formatDatetime } from '../../services/utils';
-import './ReservationList.css';
+import './AdminReservationList.css';
 
 const ReservationList: React.FC = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);

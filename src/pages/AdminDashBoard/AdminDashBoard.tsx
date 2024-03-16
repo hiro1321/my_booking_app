@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthProvider';
 
 const cardContainerStyle = {
   paddingTop: '20px',
@@ -27,13 +26,6 @@ const descriptionStyle = {
 };
 
 const DashboardPage: React.FC = () => {
-  const { isLoggedIn, login, logout } = useContext(AuthContext);
-
-  useEffect(() => {
-    console.log('ダッシュボードページ');
-    console.log(isLoggedIn);
-  }, [isLoggedIn]);
-
   return (
     <div style={cardContainerStyle}>
       <h4 style={headerStyle}>Dashboard</h4>
@@ -54,16 +46,7 @@ const DashboardPage: React.FC = () => {
             </div>
           </Link>
         </div>
-        <div style={{ flex: '1' }}>
-          <Link to='/admin/users' style={linkStyle}>
-            <div style={cardStyle}>
-              <h6 style={headerStyle}>ユーザー管理</h6>
-              <p style={descriptionStyle}>
-                ユーザーアカウントの管理を行います。
-              </p>
-            </div>
-          </Link>
-        </div>
+        <div style={{ flex: '1' }}>{}</div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './AdminLogin.css';
 import { loginApi } from '../../services/api';
 import { AuthContext } from '../../contexts/AuthProvider';

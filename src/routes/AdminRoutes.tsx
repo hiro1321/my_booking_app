@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import { Route, Switch, RouteComponentProps, Redirect } from 'react-router-dom';
-import DashboardPage from '../pages/Admn/DashBoard';
-import AdminLogin from '../pages/Admn/AdminLogin';
-import RoomsPage from '../pages/Admn/RoomsPage';
-import RoomsAddPage from '../pages/Admn/RoomsAddPage';
-import RoomsEditPage from '../pages/Admn/RoomsEditPage';
-import ReservationListPage from '../pages/Admn/ReservationList';
-import ReservationDetailPage from '../pages/ReservationDetailPage';
+import DashboardPage from '../pages/AdminDashBoard/AdminDashBoard';
+import AdminLogin from '../pages/AdminLogin/AdminLogin';
+import RoomsPage from '../pages/AdminRooms/AdminRooms';
+import RoomsAddPage from '../pages/AdminRoomsAdd/AdminRoomsAdd';
+import RoomsEditPage from '../pages/AdminRoomsEdit/AdminRoomsEdit';
+import ReservationListPage from '../pages/AdminReservationList/AdminReservationList';
+import ReservationDetailPage from '../pages/ReservationDetail/ReservationDetail';
 
 import PrivateRoute from './PrivateRoutes';
-import AdminNavbar from '../pages/Admn/AdminNavbar';
-import ReservationEdit from '../pages/Admn/ReservationEdit';
+import AdminNavbar from '../components/AdminNavbar/AdminNavbar';
+import ReservationEdit from '../pages/AdminReservationEdit/AdminReservationEdit';
 
 const AdminRoutes: React.FC<RouteComponentProps> = ({ match }) => {
   return (

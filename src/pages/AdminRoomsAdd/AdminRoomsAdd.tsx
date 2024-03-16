@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import './RoomsEditPage.css';
+import React, { useState } from 'react';
 import { Room } from '../../types/Room';
 import RoomForm from '../../components/Room/RoomForm';
 import { submitRoom } from '../../services/api';

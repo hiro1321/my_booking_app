@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './Reservation.css';
-import { checkYmdstr, cvDateStrPattern } from '../services/utils';
-import { getRoomAvailabilityApi } from '../services/api';
+import { checkYmdstr, cvDateStrPattern } from '../../services/utils';
+import { getRoomAvailabilityApi } from '../../services/api';
 
 const ReservationPage: React.FC = () => {
   useEffect(() => {

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, RouteComponentProps } from 'react-router-dom';
-import { fetchRooms, getRoomAvailabilityApi } from '../services/api';
-import { RoomField } from '../components/Room/RoomField';
-import { Room } from '../types/Room';
-import { cvNumToRoundStr } from '../services/utils';
-import './ReservationSelectRoomPage.css';
+import { fetchRooms } from '../../services/api';
+import { Room } from '../../types/Room';
+import { cvNumToRoundStr } from '../../services/utils';
+import './ReservationSelectRoom.css';
 
 interface RouteParams {
   date: string;

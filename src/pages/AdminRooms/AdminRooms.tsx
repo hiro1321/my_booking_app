@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchRooms } from '../../services/api';
 import { Room } from '../../types/Room';
-import './RoomsPage.css';
+import './AdminRooms.css';
 
 const RoomsPage: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);

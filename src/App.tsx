@@ -1,13 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './pages/Home';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Reservation from './pages/Reservation';
+import Home from './pages/Home/Home';
+import Reservation from './pages/Reservation/Reservation';
 import Navbar from './components/Navbar/Navbar';
 import AdminRoutes from './routes/AdminRoutes';
-import ReservationDetailPage from './pages/ReservationDetailPage';
-import ReservationSelectRoomPage from './pages/ReservationSelectRoomPage';
+import ReservationDetailPage from './pages/ReservationDetail/ReservationDetail';
+import ReservationSelectRoomPage from './pages/ReservationSelectRoom/ReservationSelectRoom';
 
 const App: React.FC = () => {
   return (
@@ -17,8 +15,6 @@ const App: React.FC = () => {
         <div className='container'>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/about' component={About} />
-            <Route path='/contact' component={Contact} />
             <Route exact path='/reservation' component={Reservation} />
             <Route
               exact
