@@ -10,6 +10,12 @@
   text-decoration: none;
 }
 
+button.nav-link {
+  background-color: #333;
+  border: none;
+  text-decoration: none;
+}
+
 .nav-link:hover {
   text-decoration: underline;
 }

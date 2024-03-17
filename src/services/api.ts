@@ -129,14 +129,24 @@ export const updateRoomWithImage = async (
  */
 export const submitRoom = async (roomData: Partial<Room>): Promise<void> => {
   try {
-    const room: Room = await executeApiThrowOnError(
-      `/rooms/submit/`,
-      'POST',
-      roomData
-    );
+    await executeApiThrowOnError(`/rooms/submit/`, 'POST', roomData);
   } catch (error) {
     throw new Error('部屋情報の登録に失敗');
   }
+};
+
+/**
+ * 部屋情報を削除するAPIを実行
+ * @throws 削除に失敗した場合はエラーをスロー
+ */
+export const deleteRoomApi = async (roomId: string) => {
+  const response = await executeApiThrowOnError(
+    `/rooms/${roomId}/delete/`,
+    'DELETE',
+    ''
+  );
+  console.log(response);
+  return response.reservations;
 };
 
 /**
@@ -334,7 +344,7 @@ export const executeApiHandleResponse = async (
 
   // API呼び出し
   let response: Response;
-  if (exeMethod == 'GET') {
+  if (exeMethod === 'GET') {
     response = await fetch(API_URL + pathParameter);
   } else {
     response = await fetch(API_URL + pathParameter, {
@@ -368,8 +378,7 @@ const fetchCsrfToken = async (): Promise<string | undefined> => {
   const date = new Date();
   date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
   const expires = 'expires=' + date.toUTCString();
-  document.cookie =
-    'csrftoken' + '=' + data.csrfToken + ';' + expires + ';path=/';
+  document.cookie = 'csrftoken=' + data.csrfToken + ';' + expires + ';path=/';
 
   return data.csrfToken;
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { Route, RouteProps, Redirect } from 'react-router-dom';
 import { verifyTokenApi } from '../services/api';
 
 interface PrivateRouteProps extends RouteProps {
@@ -20,12 +20,10 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
         if (!token) {
           throw new Error();
         }
-
         await verifyTokenApi(token);
-        console.log('ログイン情報の認証に成功');
         setIsLoggedIn(true);
       } catch (error: any) {
-        console.error('ログイン情報の認証に失敗');
+        // ログイン情報の認証に失敗した場合
         setIsLoggedIn(false);
       } finally {
         // 非同期処理が完了したらisLoadingをfalseに設定する

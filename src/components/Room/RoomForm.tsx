@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { ReservationFormProps } from '../../types/Reservation';
+import React from 'react';
 import { RoomFormProps } from '../../types/Room';
-import { Link } from 'react-router-dom';
 import { fileToBase64 } from '../../services/utils';
 
 const RoomForm: React.FC<RoomFormProps> = ({
@@ -92,13 +90,10 @@ const RoomForm: React.FC<RoomFormProps> = ({
           />
         </div>
 
-        <button type='button' onClick={handleSubmit}>
+        <button type='button' onClick={handleSubmit} className='btn'>
           更新
         </button>
       </form>
-      <Link to='/admin/rooms' className='link'>
-        <button className='cancel-button'>キャンセル</button>
-      </Link>
     </div>
   );
 };

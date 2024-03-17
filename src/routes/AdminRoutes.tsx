@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import { Route, Switch, RouteComponentProps, Redirect } from 'react-router-dom';
+import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import DashboardPage from '../pages/AdminDashBoard/AdminDashBoard';
 import AdminLogin from '../pages/AdminLogin/AdminLogin';
 import RoomsPage from '../pages/AdminRooms/AdminRooms';

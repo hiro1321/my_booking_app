@@ -38,7 +38,7 @@ const Home: React.FC = () => {
         </ul>
       </div>
       <div className='cta-buttons'>
-        <a href='/reservation' className='btn btn-primary'>
+        <a href='/reservation' className='btn'>
           予約をする
         </a>
       </div>

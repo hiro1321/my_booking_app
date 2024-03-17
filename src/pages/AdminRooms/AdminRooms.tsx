@@ -24,9 +24,9 @@ const RoomsPage: React.FC = () => {
     <div className='container'>
       <h4 className='title'>客室管理</h4>
       <Link to='/admin/rooms/add' className='link'>
-        <button className='add-button'>客室追加</button>
+        <button className='btn'>客室追加</button>
       </Link>
-      <div className='grid'>
+      <div className='grid mt-30'>
         {rooms.map((room) => (
           <div key={room.id} className='room-card'>
             <Link to={`/admin/rooms/edit/${room.id}`} className='link'>

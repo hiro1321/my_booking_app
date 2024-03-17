@@ -4,9 +4,7 @@ import {
   getTodayStr,
   getTomorrowDate,
 } from '../../services/utils';
-
 import { submitReservationApi } from '../../services/api';
-import './ReservationDetail.css';
 import { ReservationInputData } from '../../types/Reservation';
 import ReservationForm from '../../components/Reservation/ReservationForm';
 

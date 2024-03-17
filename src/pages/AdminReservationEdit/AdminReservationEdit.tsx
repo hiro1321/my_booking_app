@@ -3,7 +3,6 @@ import ReservationForm from '../../components/Reservation/ReservationForm';
 import { Reservation, ReservationInputData } from '../../types/Reservation';
 import {
   convertToDashFormat,
-  cvDateToStr,
   getTimeFromIsoStr,
   getTodayStr,
   getTomorrowDate,

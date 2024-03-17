@@ -10,9 +10,10 @@ interface RoomProps {
 
 export const RoomCard: React.FC<RoomProps> = ({ room, index }) => {
   const [isVisible, setIsVisible] = useState(false);
-  console.log(room);
+
+  // 0.1秒ごとの遅延で、roomCardを表示する
   useEffect(() => {
-    const delay = 100 * (index + 0.1); // 0.1秒ごとの遅延
+    const delay = 100 * (index + 0.1);
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, delay);
