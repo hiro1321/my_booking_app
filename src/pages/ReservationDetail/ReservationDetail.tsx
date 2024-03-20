@@ -6,7 +6,7 @@ import {
 } from '../../services/utils';
 import { submitReservationApi } from '../../services/api';
 import { ReservationInputData } from '../../types/Reservation';
-import ReservationForm from '../../components/Reservation/ReservationForm';
+import ReservationForm from '../../components/ReservationForm/ReservationForm';
 
 const ReservationDetailPage: React.FC = (props: any) => {
   const date = props.match.params.date
@@ -29,7 +29,7 @@ const ReservationDetailPage: React.FC = (props: any) => {
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async (
     event
   ) => {
     event.preventDefault();

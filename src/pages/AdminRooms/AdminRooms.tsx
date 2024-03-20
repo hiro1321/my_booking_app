@@ -28,7 +28,7 @@ const RoomsPage: React.FC = () => {
       </Link>
       <div className='grid mt-30'>
         {rooms.map((room) => (
-          <div key={room.id} className='room-card'>
+          <div key={room.id} className='card'>
             <Link to={`/admin/rooms/edit/${room.id}`} className='link'>
               <div>
                 <h6>{room.room_number}</h6>

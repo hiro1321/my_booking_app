@@ -9,9 +9,8 @@ body {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 800px;
+  margin: 30px auto;
 }
 
 .navbar {
@@ -48,15 +47,6 @@ body {
   text-decoration: underline;
 }
 
-/* ボタンの基本スタイル */
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px; /* フォントサイズを追加 */
-}
-
 /* プライマリーボタンのスタイル */
 .btn-primary {
   background-color: #007bff;
@@ -76,3 +66,140 @@ body {
 .btn-secondary:hover {
   background-color: #5a6268;
 }
+
+.center-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+.mt-50 {
+  margin-top: 50px;
+}
+.mb-50 {
+  margin-top: 30px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 10px;
+  margin-right: 20px;
+  text-align: center;
+  border: none;
+  color: black;
+  width: 100px;
+  border-radius: 20px;
+  text-decoration: none;
+  background-color: #cfe2f3;
+  transition: background-color 0.6s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #6db6f5;
+}
+
+.btn-primary {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error-message {
+  background-color: #ffcccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.success-message {
+  background-color: #ccf2ff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type='text'],
+input[type='number'] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* 入力フォームのレイアウト */
+.form-table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-spacing: 0;
+}
+
+.form-table th,
+.form-table td {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.form-table th {
+  text-align: left;
+  width: 30%;
+  background-color: #eee;
+}
+.form-table td {
+  width: 70%;
+}
+
+.form-table input {
+  width: 90%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  max-width: 400px;
+}
+
+.form-table input[type='date'] {
+  width: 65%;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  max-width: 300px;
+}
+.form-table select {
+  width: 20%;
+  height: 43px;
+  padding: 10px;
+  border-radius: 5px;
+
+  border: 1px solid #ccc;
+  max-width: 200px;
+}
+
+/** カードdivのレイアウト */
+.card {
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* border: 1px solid rgb(202, 202, 202); */

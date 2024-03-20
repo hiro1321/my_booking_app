@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReservationForm from '../../components/Reservation/ReservationForm';
+import ReservationForm from '../../components/ReservationForm/ReservationForm';
 import { Reservation, ReservationInputData } from '../../types/Reservation';
 import {
   convertToDashFormat,
@@ -53,7 +53,7 @@ const ReservationEdit: React.FC = (props: any) => {
     fetchRoomData();
   }, []);
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async (
     event
   ) => {
     event.preventDefault();
