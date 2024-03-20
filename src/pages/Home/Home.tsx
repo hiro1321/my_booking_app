@@ -41,6 +41,13 @@ const Home: React.FC = () => {
         <a href='/reservation' className='btn'>
           予約をする
         </a>
+        <a
+          href='/admin/dashboard'
+          className='btn'
+          style={{ marginLeft: '50px', width: '150px' }}
+        >
+          管理者向けメニュー
+        </a>
       </div>
 
       <h3>客室一覧</h3>

@@ -25,75 +25,89 @@ const RoomForm: React.FC<RoomFormProps> = ({
   return (
     <div className='room_form'>
       <h4 className='title'>客室編集</h4>
+      <table className='form-table'>
+        <tbody>
+          <tr>
+            <th>部屋番号</th>
+            <td>
+              <input
+                type='text'
+                id='room_number'
+                value={roomData?.room_number || ''}
+                onChange={(e) =>
+                  setRoomData((prevData) => {
+                    if (prevData === null) return null;
+                    return {
+                      ...prevData,
+                      room_number: e.target.value,
+                    };
+                  })
+                }
+              />
+            </td>
+          </tr>
 
-      <form className='room-form'>
-        <div className='form-group'>
-          <label htmlFor='room_number'>部屋番号</label>
-          <input
-            type='text'
-            id='room_number'
-            value={roomData?.room_number || ''}
-            onChange={(e) =>
-              setRoomData((prevData) => {
-                if (prevData === null) return null;
-                return {
-                  ...prevData,
-                  room_number: e.target.value,
-                };
-              })
-            }
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='room_type'>部屋のタイプ</label>
-          <input
-            type='text'
-            id='room_type'
-            value={roomData?.room_type || ''}
-            onChange={(e) =>
-              setRoomData((prevData) => {
-                if (prevData === null) return null;
-                return {
-                  ...prevData,
-                  room_type: e.target.value,
-                };
-              })
-            }
-          />
-        </div>
+          <tr>
+            <th>部屋のタイプ</th>
+            <td>
+              <input
+                type='text'
+                id='room_type'
+                value={roomData?.room_type || ''}
+                onChange={(e) =>
+                  setRoomData((prevData) => {
+                    if (prevData === null) return null;
+                    return {
+                      ...prevData,
+                      room_type: e.target.value,
+                    };
+                  })
+                }
+              />
+            </td>
+          </tr>
 
-        <div className='form-group'>
-          <label htmlFor='price'>金額</label>
-          <input
-            type='number'
-            id='price'
-            value={roomData?.price || 0}
-            onChange={(e) =>
-              setRoomData((prevData) => {
-                if (prevData === null) return null;
-                return {
-                  ...prevData,
-                  price: parseFloat(e.target.value),
-                };
-              })
-            }
-          />
-        </div>
+          <tr>
+            <th>金額</th>
+            <td>
+              {' '}
+              <input
+                type='number'
+                id='price'
+                value={roomData?.price || 0}
+                onChange={(e) =>
+                  setRoomData((prevData) => {
+                    if (prevData === null) return null;
+                    return {
+                      ...prevData,
+                      price: parseFloat(e.target.value),
+                    };
+                  })
+                }
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>画像</th>
+            <td>
+              <input
+                type='file'
+                id='image'
+                accept='image/*'
+                onChange={handleImageChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
 
-        <div className='form-group'>
-          <label htmlFor='image'>画像</label>
-          <input
-            type='file'
-            id='image'
-            accept='image/*'
-            onChange={handleImageChange}
-          />
-        </div>
-
-        <button type='button' onClick={handleSubmit} className='btn'>
-          更新
-        </button>
-      </form>
+      <button type='button' onClick={handleSubmit} className='btn'>
+        更新
+      </button>
     </div>
   );
 };

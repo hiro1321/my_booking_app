@@ -49,7 +49,7 @@ const ReservationPage: React.FC = () => {
   return (
     <div className='reservation-page'>
       <h2>予約ページ</h2>
-      <div className='calendar-container'>
+      <div className='center-container'>
         <Calendar tileContent={tileContent} />
       </div>
     </div>

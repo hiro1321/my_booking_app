@@ -1,48 +1,27 @@
 import React from 'react';
+import './AdminDashBoard.css';
 import { Link } from 'react-router-dom';
-
-const cardContainerStyle = {
-  paddingTop: '20px',
-};
-
-const cardStyle = {
-  backgroundColor: '#fff',
-  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-  borderRadius: '10px',
-  padding: '20px',
-};
-
-const linkStyle = {
-  textDecoration: 'none',
-  color: '#000',
-};
-
-const headerStyle = {
-  marginBottom: '10px',
-};
-
-const descriptionStyle = {
-  color: '#666',
-};
 
 const DashboardPage: React.FC = () => {
   return (
-    <div style={cardContainerStyle}>
-      <h4 style={headerStyle}>Dashboard</h4>
+    <div className='pt-20'>
+      <h4 className='nb-10'>Dashboard</h4>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ flex: '1', marginRight: '20px' }}>
-          <Link to='/admin/reservations' style={linkStyle}>
-            <div style={cardStyle}>
-              <h6 style={headerStyle}>予約管理</h6>
-              <p style={descriptionStyle}>予約の一覧や詳細を管理します。</p>
+          <Link to='/admin/reservations' className='link-style'>
+            <div className='card'>
+              <h6 className='header-style'>予約管理</h6>
+              <p className='description-text'>
+                予約の一覧や詳細を管理します。受付時に帳票を出力します。
+              </p>
             </div>
           </Link>
         </div>
         <div style={{ flex: '1', marginRight: '20px' }}>
-          <Link to='/admin/rooms' style={linkStyle}>
-            <div style={cardStyle}>
-              <h6 style={headerStyle}>客室管理</h6>
-              <p style={descriptionStyle}>客室の追加や編集を行います。</p>
+          <Link to='/admin/rooms' className='link-style'>
+            <div className='card'>
+              <h6 className='nb-10'>客室管理</h6>
+              <p className='description-text'>客室の追加や編集を行います。</p>
             </div>
           </Link>
         </div>

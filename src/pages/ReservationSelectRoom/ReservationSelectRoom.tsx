@@ -34,12 +34,12 @@ const ReservationSelectRoomPage = (props: any) => {
   return (
     <div>
       <h2>{date}</h2>
-      <p>予約するお部屋を選択してください</p>
+      <p style={{ textAlign: 'center' }}>予約するお部屋を選択してください</p>
       <ul className='room-list'>
         {rooms.map((room, index) => {
           return (
             <div
-              className='roomdetail'
+              className='card roomdetail'
               key={index}
               onClick={() => handleRoomClick(room.room_number)}
             >

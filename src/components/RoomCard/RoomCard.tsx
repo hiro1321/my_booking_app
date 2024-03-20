@@ -21,7 +21,7 @@ export const RoomCard: React.FC<RoomProps> = ({ room, index }) => {
   }, [index]);
 
   return (
-    <div className={`incomplete-area ${isVisible ? 'visible' : ''}`}>
+    <div className={`incomplete-area card ${isVisible ? 'visible' : ''}`}>
       <p>{room.room_number}号室</p>
       <div className='img-container'>
         {room.room_image ? (

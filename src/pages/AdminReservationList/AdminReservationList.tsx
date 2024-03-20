@@ -35,7 +35,6 @@ const ReservationList: React.FC = () => {
   }, []);
 
   const handleReception = async (reservationId: string) => {
-    // TODO:カスタムダイアログを作成してレイアウトを整える
     // TODO:受付取消の処理も実装する
     const isConfirmed = window.confirm(
       '受付します。料金を支払済であることを確認してください。'
@@ -59,7 +58,21 @@ const ReservationList: React.FC = () => {
       window.URL.revokeObjectURL(url);
 
       window.confirm('受付票を出力しました。お客様へお渡しください');
-      // 予約を削除した後、再度予約一覧を取得して更新する
+      // 更新後の予約情報を再表示
+      const updatedReservations = await getReservationListApi();
+      updatedReservations && setReservations(updatedReservations);
+    }
+  };
+
+  const handleCancel = async (reservationId: string) => {
+    const isConfirmed = window.confirm(
+      '受付を取り消します、よろしいでしょうか？'
+    );
+    if (isConfirmed) {
+      // is_paidを更新
+      await updateReservationPaidApi(reservationId, false);
+
+      // 更新後の予約情報を再表示
       const updatedReservations = await getReservationListApi();
       updatedReservations && setReservations(updatedReservations);
     }
@@ -113,51 +126,89 @@ const ReservationList: React.FC = () => {
 
   return (
     <div>
-      <div className='reservation-title action-buttons'>
+      <div className='reservation-title'>
         <h2>予約一覧</h2>
-        <Link to='/admin/reservations/add'>予約追加</Link>
+        <Link to='/admin/reservations/add' className='btn mr-50'>
+          予約追加
+        </Link>
         <div>
-          <button onClick={() => setShowSearch(!showSearch)}>検索</button>
-        </div>
-        <div className={showSearch ? 'search-window visible' : 'search-window'}>
-          <label>部屋番号：</label>
-          <input
-            type='text'
-            placeholder='部屋番号で検索'
-            value={searchRoomNumber}
-            onChange={(e) => setSearchRoomNumber(e.target.value)}
-          />
-          <label>予約開始日：</label>
-          <input
-            type='date'
-            placeholder='予約開始日で検索'
-            value={searchCheckIn}
-            onChange={(e) => setSearchCheckIn(e.target.value)}
-          />
-          <label>予約終了日：</label>
-          <input
-            type='date'
-            placeholder='予約終了日で検索'
-            value={searchCheckOut}
-            onChange={(e) => setSearchCheckOut(e.target.value)}
-          />
-          <label>名前：</label>
-          <input
-            type='text'
-            placeholder='名前で検索'
-            value={searchName}
-            onChange={(e) => setSearchName(e.target.value)}
-          />
-
-          <label>未受付の予約のみ表示：</label>
-          <input
-            type='checkbox'
-            id='isPaidOnlyCheckbox'
-            checked={isPaidOnly}
-            onChange={(e) => setIsPaidOnly(e.target.checked)}
-          />
+          <button
+            className='search-btn'
+            onClick={() => setShowSearch(!showSearch)}
+          >
+            {showSearch ? '検索ウィンドウを閉じる▼' : '検索ウィンドウを開く▼'}
+          </button>
         </div>
       </div>
+      <div
+        className={
+          showSearch
+            ? 'search-window center-container'
+            : 'search-window novisible'
+        }
+      >
+        <table className='form-table' style={{ width: '600px' }}>
+          <tbody>
+            <tr>
+              <th>部屋番号</th>
+              <td>
+                <input
+                  type='text'
+                  placeholder='部屋番号で検索'
+                  value={searchRoomNumber}
+                  onChange={(e) => setSearchRoomNumber(e.target.value)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>予約開始日</th>
+              <td>
+                <input
+                  type='date'
+                  placeholder='予約開始日で検索'
+                  value={searchCheckIn}
+                  onChange={(e) => setSearchCheckIn(e.target.value)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>予約終了日</th>
+              <td>
+                <input
+                  type='date'
+                  placeholder='予約終了日で検索'
+                  value={searchCheckOut}
+                  onChange={(e) => setSearchCheckOut(e.target.value)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>名前</th>
+              <td>
+                <input
+                  type='text'
+                  placeholder='名前で検索'
+                  value={searchName}
+                  onChange={(e) => setSearchName(e.target.value)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>未受付の予約のみ表示</th>
+              <td>
+                <input
+                  style={{ textAlign: 'left' }}
+                  type='checkbox'
+                  id='isPaidOnlyCheckbox'
+                  checked={isPaidOnly}
+                  onChange={(e) => setIsPaidOnly(e.target.checked)}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <table className='reservation-table'>
         <thead>
           <tr>
@@ -175,14 +226,29 @@ const ReservationList: React.FC = () => {
               <td>{formatDatetime(reservation.start_datetime)}</td>
               <td>{formatDatetime(reservation.end_datetime)}</td>
               <td>{reservation.customer_name}</td>
-              <td className='action-buttons'>
-                <a onClick={() => handleReception(reservation.id)}>
+              <td>
+                <a
+                  className='btn wi-80'
+                  onClick={() =>
+                    reservation.is_paid
+                      ? handleCancel(reservation.id)
+                      : handleReception(reservation.id)
+                  }
+                >
                   {reservation.is_paid ? '受付取消' : '受付'}
                 </a>
-                <Link to={`/admin/reservations/edit/${reservation.id}`}>
+                <Link
+                  className='btn wi-50'
+                  to={`/admin/reservations/edit/${reservation.id}`}
+                >
                   編集
                 </Link>{' '}
-                <a onClick={() => handleDelete(reservation.id)}>削除</a>
+                <a
+                  className='btn wi-50'
+                  onClick={() => handleDelete(reservation.id)}
+                >
+                  削除
+                </a>
               </td>
             </tr>
           ))}
