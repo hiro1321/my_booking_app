@@ -29,3 +29,16 @@
 .img-container img {
   width: 300px;
 }
+
+.incomplete-area.card {
+  padding: 20px;
+  box-shadow: 10px 10px 15px -10px #9e9e9e;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.incomplete-area.card:hover {
+  background-color: #fff;
+  cursor: auto;
+}
