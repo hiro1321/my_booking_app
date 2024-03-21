@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# ビジネスホテル向けの予約管理システム（フロント側）
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## サービスの URL
 
-## Available Scripts
+https://my-booking-app-gilt.vercel.app/<br/>
+Vercel の無料プランで試作品としてデプロイしています。
 
-In the project directory, you can run:
+  <br/>
 
-### `npm start`
+## 使用技術
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- フロントエンド:TypeScript, React
+- バックエンド：Python, Django
+- サーバー：Vercel, Render
+- データベース：PostgreSQL
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<br/>
 
-### `npm test`
+## 機能概要
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| トップ画面                          | 　予約画面 ①                                                                                      |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------- |
+| ![Top画面](/docs/img/home_1_1.jpeg) | ![予約画面](/docs/img/Reservation_1_1.jpeg)                                                       |
+| 部屋情報の一覧が表示されます。      | 予約カレンダーで日毎の空き部屋数が表示されます。<br>日付をクリックすると予約画面 ② に遷移します。 |
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| 予約画面 ②                                                            | 　予約画面 ③                                                               |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| ![Top画面](/docs/img/Reservation_1_2.jpeg)                            | ![予約画面](/docs/img/Reservation_1_3.jpeg)                                |
+| 部屋の一覧が表示されます。<br>クリックすると予約画面 ③ に遷移します。 | 予約情報を入力します。<br>入力値に誤りがあるとエラーメッセージを表示します |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| 管理者メニュー\_ログイン                                                                                                         | 　管理者メニュー\_予約一覧                                                                                             |
+| -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| ![Top画面](/docs/img/Login_1_1.jpeg)                                                                                             | ![予約画面](/docs/img/Reservation_1_4.jpeg)                                                                            |
+| ログインに成功すると管理者ページへ遷移します。<br>ログイン前に管理者ページにアクセスすると、ログインページへリダイレクトされます | 予約一覧が表示されます。<br>予約の編集・削除・追加が可能です。<br>検索機能で名前等でフィルターをかけることができます。 |
 
-### `npm run eject`
+<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+| 受付帳票                                          | 　管理者メニュー\_客室管理                                              |
+| ------------------------------------------------- | ----------------------------------------------------------------------- |
+| ![Top画面](/docs/img/Report_1_1.jpeg)             | ![予約画面](/docs/img/Room_1_1.jpeg)                                    |
+| 予約を受付すると Excel 形式の帳票が出力されます。 | 客室情報の一覧が表示されます<br> 客室情報の編集・削除・追加が可能です。 |
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+| 管理者メニュー\_客室管理                                   | 　管理者メニュー\_ログアウト ①                                                         |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| ![Top画面](/docs/img/Room_1_2.jpeg)                        | ![予約画面](/docs/img/Login_1_1.jpeg)                                                  |
+| 部屋情報の編集画面です。<br>画像のアップロードも可能です。 | ナビゲーションバーのログアウトをクリックするとログアウトし、ログイン画面へ遷移します。 |
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br>
